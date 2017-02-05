@@ -40,10 +40,13 @@ public class SystemUtil
 
     public static RaycastHit RayCast(Vector3 rayOriginPoint, Vector3 rayDirection, float rayDistance, LayerMask mask, Color color, bool drawGizmo = false)
     {
+        
+#if UNITY_EDITOR
         if (drawGizmo)
         {
             Debug.DrawRay(rayOriginPoint, rayDirection * rayDistance, color);
         }
+#endif
         RaycastHit hit;
         Physics.Raycast(rayOriginPoint, rayDirection, out hit, rayDistance, mask);
         return hit;

@@ -58,12 +58,6 @@ public class PlayerCtrl : MonoBehaviour
     [Range(0.0f, 50.0f)]
     public float jumpHeight = 18.0f;
 
-    //落地检查器
-    public Transform groundCheck;
-    
-    [Range(0.0f, 1.0f)]
-    public float groundCheckRadius;
-    
     public LayerMask whatIsGround;
     
     public bool isGround;
@@ -98,28 +92,18 @@ public class PlayerCtrl : MonoBehaviour
         _checkingBounds = true;
     }
 
-    public void FixedUpdate()
-    {
-        //Debug.Log(_rigidbody.velocity.y);
-        //Debug.Log(_rigidbody.velocity.x);
-    }
-
     void EveryFrame()
     {
-
         //this.isGround = Physics.OverlapSphere(groundCheck.position, groundCheckRadius, whatIsGround).Length != 0;
-        
         facingRight = playerGraphics.localScale.x > 0;
-
         CastRaysToTheSides();
+        CastRaysAbove();
         CastRaysBelow();
-
     }
 
     void Update()
     {
-        
-        if (_rigidbody.velocity.y < -2.0f && !isGround)
+        if (_rigidbody.velocity.y < -0.5f && !isGround)
         {
             falling = true;
             _bothSideRay = true;
@@ -130,7 +114,7 @@ public class PlayerCtrl : MonoBehaviour
             _bothSideRay = false;
         }
 
-        if (_rigidbody.velocity.y > 2.0f && !isGround)
+        if (_rigidbody.velocity.y > 0.5f && !isGround)
         {
             goUp = true;
         }
@@ -143,6 +127,8 @@ public class PlayerCtrl : MonoBehaviour
         {
             jump();
         }
+
+        EveryFrame();
 
         if (ctrlActive)
         {
@@ -171,11 +157,9 @@ public class PlayerCtrl : MonoBehaviour
 
         if (isWallEdge)
             _moveVelocity = 0;
-
+        
         _rigidbody.velocity = new Vector2(_moveVelocity, _rigidbody.velocity.y);
 
-        EveryFrame();
-        
         SetRaysParameters();
 
         CheckBoundsEdge();
@@ -194,17 +178,18 @@ public class PlayerCtrl : MonoBehaviour
             jump();
     }
 
+    #region 碰撞检测射线
+
     //发射墙壁检测射线
     private void CastRaysToTheSides()
     {
-        Vector3 rayCastFromBottom = new Vector3(_rayBoundsRectangle.center.x, _rayBoundsRectangle.yMin + _extendOffset, 0);
-        Vector3 rayCastFromUp = new Vector3(_rayBoundsRectangle.center.x, _rayBoundsRectangle.yMax - _extendOffset, 0);
+        Vector3 rayCastFromBottom = new Vector3(_rayBoundsRectangle.center.x, _rayBoundsRectangle.yMin + _extendOffset * 0.3f, 0);
+        Vector3 rayCastFromUp = new Vector3(_rayBoundsRectangle.center.x, _rayBoundsRectangle.yMax - _extendOffset * 0.3f, 0);
 
         float rayLength = Mathf.Abs(_moveVelocity * Time.deltaTime) + _rayBoundsRectangle.width * 0.5f + _extendOffset;
 
         int dir = facingRight ? 1 : -1;
         RaycastHit hitsStorage = new RaycastHit();
-
 
         for (int i = 0; i < rayCount; i++)
         {
@@ -218,10 +203,12 @@ public class PlayerCtrl : MonoBehaviour
                 {
                     if (_moveVelocity == 0)
                         return;
-                    if (Math.Sign(_moveVelocity) + dir == 0)
+                    //判断墙壁和移动方向一致性
+                    if (Math.Sign(_moveVelocity) - dir == 0)
                         return;
 
                     isWallEdge = true;
+                    //防止穿墙的位置重置（通用原理）
                     this.PlayerTrans.position = new Vector3(hitsStorage.point.x + dir * _rayBoundsRectangle.width * 0.5f, PlayerTrans.position.y, 0);
 
                     return;
@@ -242,7 +229,6 @@ public class PlayerCtrl : MonoBehaviour
 
                 return;
             }
-
         }
 
         isWallEdge = false;
@@ -251,16 +237,9 @@ public class PlayerCtrl : MonoBehaviour
     //发射顶部检测射线
     private void CastRaysAbove()
     {
-
-
-    }
-
-    //发射地面检测射线
-    private void CastRaysBelow()
-    {
-        Vector3 verticalRayCastFromLeft = new Vector3(_rayBoundsRectangle.xMin + _extendOffset * 2,
+        Vector3 verticalRayCastFromLeft = new Vector3(_rayBoundsRectangle.xMin + _extendOffset,
                                                         _rayBoundsRectangle.center.y, 0);
-        Vector3 verticalRayCastToRight = new Vector3(_rayBoundsRectangle.xMax - _extendOffset * 2,
+        Vector3 verticalRayCastToRight = new Vector3(_rayBoundsRectangle.xMax - _extendOffset,
                                                    _rayBoundsRectangle.center.y, 0);
         float rayLength = Mathf.Abs(_rigidbody.velocity.y * Time.deltaTime) + _rayBoundsRectangle.height * 0.5f + _extendOffset;
 
@@ -268,16 +247,43 @@ public class PlayerCtrl : MonoBehaviour
 
         for (int i = 0; i < rayCount; i++)
         {
+            if (!(_rigidbody.velocity.y > 0))
+                break;
             Vector3 rayOriginPoint = Vector3.Lerp(verticalRayCastFromLeft, verticalRayCastToRight, (float)i / (float)(rayCount - 1));
+            hitsStorage = SystemUtil.RayCast(rayOriginPoint, Vector3.up, rayLength, whatIsGround, Color.black, true);
 
-            hitsStorage = SystemUtil.RayCast(rayOriginPoint, Vector3.down, rayLength, whatIsGround, Color.black, true);
+            if (hitsStorage.collider != null)
+            {
+                _rigidbody.velocity = new Vector2(_moveVelocity, 0);
+                this.PlayerTrans.position = new Vector3(PlayerTrans.position.x, hitsStorage.point.y - _rayBoundsRectangle.height * 0.5f, 0);
+                return;
+            }
+        }
+    }
+
+    //发射地面检测射线
+    private void CastRaysBelow()
+    {
+        Vector3 verticalRayCastFromLeft = new Vector3(_rayBoundsRectangle.xMin + _extendOffset * 4,
+                                                        _rayBoundsRectangle.center.y, 0);
+        Vector3 verticalRayCastToRight = new Vector3(_rayBoundsRectangle.xMax - _extendOffset * 4,
+                                                   _rayBoundsRectangle.center.y, 0);
+        float rayLength = Mathf.Abs(_rigidbody.velocity.y * Time.deltaTime) + _rayBoundsRectangle.height * 0.5f + _extendOffset;
+
+        RaycastHit hitsStorage = new RaycastHit();
+
+        for (int i = 0; i < rayCount; i++)
+        {
             if (_rigidbody.velocity.y > 0)
                 break;
+            Vector3 rayOriginPoint = Vector3.Lerp(verticalRayCastFromLeft, verticalRayCastToRight, (float)i / (float)(rayCount - 1));
+            hitsStorage = SystemUtil.RayCast(rayOriginPoint, Vector3.down, rayLength, whatIsGround, Color.black, true);
+            
             if (hitsStorage.collider != null)
             {
                 this.isGround = true;
                 _rigidbody.useGravity = false;
-                _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, 0);
+                _rigidbody.velocity = new Vector2(_moveVelocity, 0);
                 this.PlayerTrans.position = new Vector3(PlayerTrans.position.x, hitsStorage.point.y + _rayBoundsRectangle.height * 0.5f, 0);
                 return;
             }
@@ -288,6 +294,8 @@ public class PlayerCtrl : MonoBehaviour
 
     }
 
+    #endregion
+
     private void SetRaysParameters()
     {
 
@@ -295,10 +303,10 @@ public class PlayerCtrl : MonoBehaviour
                                        _playerCollider.bounds.min.y,
                                        _playerCollider.bounds.size.x,
                                        _playerCollider.bounds.size.y);
-
+#if UNITY_EDITOR
         Debug.DrawLine(new Vector2(_rayBoundsRectangle.center.x, _rayBoundsRectangle.yMin), new Vector2(_rayBoundsRectangle.center.x, _rayBoundsRectangle.yMax), Color.yellow);
         Debug.DrawLine(new Vector2(_rayBoundsRectangle.xMin, _rayBoundsRectangle.center.y), new Vector2(_rayBoundsRectangle.xMax, _rayBoundsRectangle.center.y), Color.yellow);
-
+#endif
     }
 
 
