@@ -1,3 +1,2 @@
-/mtk/Library
-/mtk/HeartCubeProject.CSharp.csproj
-/mtk/HeartCubeProject.CSharp.Editor.csproj
+Library
+*.csproj
