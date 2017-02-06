@@ -21,10 +21,10 @@ public class Door : MonoBehaviour
 
     void Start()
     {
-        InitState(LevelMgr.It.gearCount > 0 ? true : false);
+        
     }
 
-    void InitState(bool hasLockGear)
+    public void InitState(bool hasLockGear)
     {
         _collider.enabled = !hasLockGear;
         _open.SetActive(!hasLockGear);

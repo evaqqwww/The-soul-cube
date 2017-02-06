@@ -5,24 +5,24 @@ using System.Text;
 using UnityEngine;
 using DG.Tweening;
 
-public class LevelMgr:Singleton<LevelMgr>
+public class LevelMgr : Singleton<LevelMgr>
 {
-   
+
     public Bounds levelBounds = new Bounds(Vector3.zero, Vector3.one * 10);
-    
+
     private GameObject[] _gameCubes;
     private Transform[] _cubesTrans;
-    //关卡重生点
-    private GameObject _spawnPoint;            
 
+    //当前关卡基础信息
+    private LevelOrigin _levelOrigin;
     public Transform[] CubesTrans
     {
         get
         {
-            if(_cubesTrans==null)
+            if (_cubesTrans == null)
             {
                 _cubesTrans = new Transform[2];
-                if (!doubleCube)
+                if (!_levelOrigin.doubleCube)
                     _cubesTrans[0] = _gameCubes[0].transform;
                 else
                 {
@@ -39,11 +39,8 @@ public class LevelMgr:Singleton<LevelMgr>
         }
     }
 
-    //双cube场景
-    public bool doubleCube;
-
     //前置机关数量
-    public int gearCount;
+    private int _gearCount;
 
     private PlayerCtrl _player;
 
@@ -54,7 +51,7 @@ public class LevelMgr:Singleton<LevelMgr>
 
     //单cube水平转动角
     private int _hSRotation;
-    
+
     private Door _door;
 
     public delegate void TurnSideGlobalHandle();
@@ -74,20 +71,35 @@ public class LevelMgr:Singleton<LevelMgr>
     {
         base.Awake();
         _player = GameObject.FindGameObjectWithTag("player").GetComponent<PlayerCtrl>();
-        _gameCubes = GameObject.FindGameObjectsWithTag("cube");
         _hTurn = GameObject.FindGameObjectWithTag("hturn").transform;
         _vTurn = GameObject.FindGameObjectWithTag("vturn").transform;
-        _door = GameObject.FindGameObjectWithTag("door").GetComponent<Door>();
-
-        if (!doubleCube)
-            return;
-        _singleTurn = GameObject.FindGameObjectWithTag("singleTurn").transform;
     }
 
     void Start()
     {
+
+
+    }
+
+    public void InitScene(LevelOrigin info)
+    {
+        _gameCubes = GameObject.FindGameObjectsWithTag("cube");
+        _door = GameObject.FindGameObjectWithTag("door").GetComponent<Door>();
+        _levelOrigin = info;
+        _gearCount = _levelOrigin.gearCount;
+        if (!_levelOrigin.doubleCube)
+            return;
+        _singleTurn = GameObject.FindGameObjectWithTag("singleTurn").transform;
+
+        _levelOrigin.SpawnPlayer(Player.PlayerTrans);
+        _door.InitState(_gearCount > 0 ? true : false);
         
-      
+    }
+
+    public void ClearWorld()
+    {
+        turnSideGlobalHandle = InitEvent;
+
     }
 
     //初始化全局事件
@@ -144,10 +156,10 @@ public class LevelMgr:Singleton<LevelMgr>
     {
         if (null != turnSideGlobalHandle)
             turnSideGlobalHandle();
-        
-        if (!doubleCube)
+
+        if (!_levelOrigin.doubleCube)
             CubesTrans[0].SetParent(ctrl);
-        else if (_gameCubes.Length==2)
+        else if (_gameCubes.Length == 2)
         {
             CubesTrans[0].SetParent(ctrl);
             CubesTrans[1].SetParent(ctrl);
@@ -168,11 +180,11 @@ public class LevelMgr:Singleton<LevelMgr>
 
     #endregion
 
-    
+
     public void UnlockGear()
     {
-        gearCount--;
-        if (gearCount == 0)
+        _gearCount--;
+        if (_gearCount == 0)
             _door.OpenTheDoor();
     }
 
