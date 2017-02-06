@@ -12,6 +12,8 @@ public class LevelMgr:Singleton<LevelMgr>
     
     private GameObject[] _gameCubes;
     private Transform[] _cubesTrans;
+    //关卡重生点
+    private GameObject _spawnPoint;            
 
     public Transform[] CubesTrans
     {
@@ -55,17 +57,6 @@ public class LevelMgr:Singleton<LevelMgr>
     
     private Door _door;
 
-    //锁定换面
-    //private bool _isLock;
-
-    //public bool IsLock
-    //{
-    //    get
-    //    {
-    //        return _isLock;
-    //    }
-    //}
-
     public delegate void TurnSideGlobalHandle();
 
     public event TurnSideGlobalHandle turnSideGlobalHandle;
@@ -88,6 +79,8 @@ public class LevelMgr:Singleton<LevelMgr>
         _vTurn = GameObject.FindGameObjectWithTag("vturn").transform;
         _door = GameObject.FindGameObjectWithTag("door").GetComponent<Door>();
 
+        if (!doubleCube)
+            return;
         _singleTurn = GameObject.FindGameObjectWithTag("singleTurn").transform;
     }
 

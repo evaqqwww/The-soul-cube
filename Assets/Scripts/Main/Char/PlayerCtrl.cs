@@ -103,7 +103,7 @@ public class PlayerCtrl : MonoBehaviour
 
     void Update()
     {
-        if (_rigidbody.velocity.y < -0.5f && !isGround)
+        if (_rigidbody.velocity.y < -0.1f && !isGround)
         {
             falling = true;
             _bothSideRay = true;
@@ -114,7 +114,7 @@ public class PlayerCtrl : MonoBehaviour
             _bothSideRay = false;
         }
 
-        if (_rigidbody.velocity.y > 0.5f && !isGround)
+        if (_rigidbody.velocity.y > 0.1f && !isGround)
         {
             goUp = true;
         }
@@ -142,13 +142,13 @@ public class PlayerCtrl : MonoBehaviour
         //朝向和行走状态
         if (ctrlActive && Input.GetAxis("Horizontal") > 0.1f || ctrlActive && CrossPlatformInputManager.It.GetValue > 0.5f)
         {
-            playerGraphics.localScale = new Vector3(0.8f, 0.8f, 0.8f);
+            playerGraphics.localScale = new Vector3(1.0f, 1.0f, 1.0f);
             if (isGround)
                 walking = true;
         }
         else if (ctrlActive && Input.GetAxis("Horizontal") < -0.1f || ctrlActive && CrossPlatformInputManager.It.GetValue < -0.5f)
         {
-            playerGraphics.localScale = new Vector3(-0.8f, 0.8f, 0.8f);
+            playerGraphics.localScale = new Vector3(-1.0f, 1.0f, 1.0f);
             if (isGround)
                 walking = true;
         }
@@ -183,8 +183,8 @@ public class PlayerCtrl : MonoBehaviour
     //发射墙壁检测射线
     private void CastRaysToTheSides()
     {
-        Vector3 rayCastFromBottom = new Vector3(_rayBoundsRectangle.center.x, _rayBoundsRectangle.yMin + _extendOffset * 0.3f, 0);
-        Vector3 rayCastFromUp = new Vector3(_rayBoundsRectangle.center.x, _rayBoundsRectangle.yMax - _extendOffset * 0.3f, 0);
+        Vector3 rayCastFromBottom = new Vector3(_rayBoundsRectangle.center.x, _rayBoundsRectangle.yMin + _extendOffset * 0.2f, 0);
+        Vector3 rayCastFromUp = new Vector3(_rayBoundsRectangle.center.x, _rayBoundsRectangle.yMax - _extendOffset * 0.2f, 0);
 
         float rayLength = Mathf.Abs(_moveVelocity * Time.deltaTime) + _rayBoundsRectangle.width * 0.5f + _extendOffset;
 
