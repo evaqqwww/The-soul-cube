@@ -13,8 +13,6 @@ public class LevelMgr : Singleton<LevelMgr>
     private GameObject[] _gameCubes;
     private Transform[] _cubesTrans;
 
-    //当前关卡基础信息
-    private LevelOrigin _levelOrigin;
     public Transform[] CubesTrans
     {
         get
@@ -38,6 +36,9 @@ public class LevelMgr : Singleton<LevelMgr>
             return _cubesTrans;
         }
     }
+
+    //当前关卡基础信息
+    private LevelOrigin _levelOrigin;
 
     //前置机关数量
     private int _gearCount;
@@ -73,27 +74,32 @@ public class LevelMgr : Singleton<LevelMgr>
         _player = GameObject.FindGameObjectWithTag("player").GetComponent<PlayerCtrl>();
         _hTurn = GameObject.FindGameObjectWithTag("hturn").transform;
         _vTurn = GameObject.FindGameObjectWithTag("vturn").transform;
+        _singleTurn = GameObject.FindGameObjectWithTag("singleTurn").transform;
+
     }
 
     void Start()
     {
 
-
     }
 
     public void InitScene(LevelOrigin info)
     {
-        _gameCubes = GameObject.FindGameObjectsWithTag("cube");
-        _door = GameObject.FindGameObjectWithTag("door").GetComponent<Door>();
         _levelOrigin = info;
         _gearCount = _levelOrigin.gearCount;
-        if (!_levelOrigin.doubleCube)
-            return;
-        _singleTurn = GameObject.FindGameObjectWithTag("singleTurn").transform;
+       
+        _gameCubes = GameObject.FindGameObjectsWithTag("cube");
 
-        _levelOrigin.SpawnPlayer(Player.PlayerTrans);
-        _door.InitState(_gearCount > 0 ? true : false);
-        
+        _player.SwitchShow();
+        _levelOrigin.SpawnPlayer(_player);
+
+        int zValue = CubesTrans[0].GetComponent<CubeState>().mapBase / 2;
+        _hTurn.position = new Vector3(0, 0, zValue);
+        _vTurn.position = new Vector3(0, 0, zValue);
+
+        _door = GameObject.FindGameObjectWithTag("door").GetComponent<Door>();
+        if (_door)
+            _door.InitState(_gearCount > 0 ? true : false);
     }
 
     public void ClearWorld()
@@ -141,13 +147,23 @@ public class LevelMgr : Singleton<LevelMgr>
     //单cube水平旋转
     public void SingleCubeTurn(int part)
     {
-        foreach (var item in CubesTrans)
-        {
-            item.parent = null;
-        }
+        ResetParents();
         CubesTrans[part].SetParent(_singleTurn);
         _hSRotation += 90;
-        _singleTurn.DORotateQuaternion(Quaternion.AngleAxis(_hSRotation, Vector3.up), LevelMgr.It.Player.cubeRotationTime).OnComplete(_player.RevertState);
+        _singleTurn.DORotateQuaternion(Quaternion.AngleAxis(_hSRotation, Vector3.up), _player.cubeRotationTime).OnComplete(_player.RevertState);
+
+    }
+
+    private void ResetParents(bool reset = false)
+    {
+        foreach (var item in CubesTrans)
+        {
+            if (!item)
+                continue;
+                item.parent = null;
+            if (reset)
+                item.rotation = Quaternion.Euler(Vector3.zero);
+        }
 
     }
 
@@ -180,6 +196,16 @@ public class LevelMgr : Singleton<LevelMgr>
 
     #endregion
 
+    public void KillPlayer()
+    {
+        _player.KillSelf();
+    }
+
+    public void SpawnPlayer()
+    {
+        ResetParents(true);
+        _levelOrigin.SpawnPlayer(_player);
+    }
 
     public void UnlockGear()
     {

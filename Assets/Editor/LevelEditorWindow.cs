@@ -59,29 +59,74 @@ public class LevelEditorWindow : EditorWindow
         }
     }
 
-    private string assetPath = @"Assets\Resources\Prefabs\DemoStandard\mapNode.prefab";
+    //关卡地图块基数
+    private bool _b12, _b14, _b16;
+
+    private int MapBase
+    {
+        get
+        {
+            return CubeState.mapBase;
+        }
+        set
+        {
+            CubeState.mapBase = value;
+        }
+    }
+
+    //标准地图块
+    private string mapS_Path = @"Assets\Resources\Prefabs\DemoStandard\mapNode_S.prefab";
+    //mini地图块
+    private string mapM_Path = @"Assets\Resources\Prefabs\DemoStandard\mapNode_M.prefab";
+
 
     //下拉菜单相关属性
     int _curShowSide = 0;
     int _curAngles = 0;
-    
-    string[] _popSides = {"0", "1", "2", "3", "4", "5" };
+    int _curEditorType = 0;
+
+    string[] _popSides = { "0", "1", "2", "3", "4", "5" };
     string[] _sideAngles = { "90", "180" };
-    
+    string[] _editorType = { "标准地图块", "细分地图块" };
+
     //地图快捷编辑
     RaycastHit _hitInfo;
     SceneView.OnSceneFunc _delegate;
     static LevelEditorWindow _windowInstance;
-    private List<Rect> _mapRectList = new List<Rect>();        //地块rect集合
-    private List<Rect> MapRectList
+
+    private List<Rect> _mapS_RectList = new List<Rect>();        //标准地块rect集合
+    private List<Rect> _mapM_RectList = new List<Rect>();        //MINI地块rect集合
+
+    private List<Rect> MapS_RectList
     {
         get
         {
-            if (_mapRectList.Count == 0)
+            if (_mapS_RectList.Count == 0)
             {
-                InitMapRects();
+                InitSMapRects();
             }
-            return _mapRectList;
+            return _mapS_RectList;
+        }
+    }
+
+    private List<Rect> MapM_RectList
+    {
+        get
+        {
+            if (_mapM_RectList.Count == 0)
+            {
+                InitMMapRects();
+            }
+            return _mapM_RectList;
+        }
+    }
+
+    //当前编辑类型
+    private bool IsMINI
+    {
+        get
+        {
+            return _curEditorType == 0 ? false : true;
         }
     }
 
@@ -121,22 +166,55 @@ public class LevelEditorWindow : EditorWindow
 
     void OnGUI()
     {
-        
+        EditorGUILayout.Space();
+        EditorGUILayout.LabelField("选择关卡地图基数", EditorStyles.boldLabel);
+
+        EditorGUILayout.BeginHorizontal();
+        if (GUILayout.Toggle(_b12, "12", GUILayout.Width(100.0f)))
+        {
+            _b12 = true;
+            _b14 = false;
+            _b16 = false;
+            MapBase = 12;
+        }
+        if (GUILayout.Toggle(_b14, "14", GUILayout.Width(100.0f)))
+        {
+            _b12 = false;
+            _b14 = true;
+            _b16 = false;
+            MapBase = 14;
+        }
+        if (GUILayout.Toggle(_b16, "16", GUILayout.Width(100.0f)))
+        {
+            _b12 = false;
+            _b14 = false;
+            _b16 = true;
+            MapBase = 16;
+        }
+        EditorGUILayout.EndHorizontal();
+
+        GUIStyle style_1 = EditorStyles.toolbarPopup;
+        style_1.alignment = TextAnchor.MiddleCenter;
+        style_1.fontSize = 20;
+        style_1.fixedHeight = 25.0f;
+        _curEditorType = EditorGUILayout.Popup(_curEditorType, _editorType, style_1, GUILayout.Width(150.0f), GUILayout.Height(25.0f));
+        EditorGUILayout.HelpBox("细化场景地图，切记切换当前编辑类型！！！", MessageType.Error);
+
         if (GUILayout.Button("初始化地图块"))
             MakeInitMaps();
         EditorGUILayout.HelpBox("场景初始化后将不被再执行！！！，操作双Cube的场景，注意时刻保持单个方块的显示！！！", MessageType.Warning);
 
-        
+        GUIStyle style_2 = EditorStyles.popup;
         EditorGUILayout.LabelField("根据序号选择显示的平面", EditorStyles.boldLabel);
         EditorGUILayout.BeginHorizontal();
-        _curShowSide = EditorGUILayout.Popup(_curShowSide, _popSides, EditorStyles.popup,GUILayout.Width(100.0f));
+        _curShowSide = EditorGUILayout.Popup(_curShowSide, _popSides, style_2, GUILayout.Width(100.0f));
         if (GUILayout.Button("选择", GUILayout.Width(100.0f)))
             SelectCurSide();
         EditorGUILayout.EndHorizontal();
 
         EditorGUILayout.LabelField("旋转当前平面", EditorStyles.boldLabel);
         EditorGUILayout.BeginHorizontal();
-        _curAngles = EditorGUILayout.Popup(_curAngles, _sideAngles, EditorStyles.popup, GUILayout.Width(100.0f));
+        _curAngles = EditorGUILayout.Popup(_curAngles, _sideAngles, style_2, GUILayout.Width(100.0f));
         if (GUILayout.Button("旋转", GUILayout.Width(100.0f)))
             RotationCurSide();
         EditorGUILayout.EndHorizontal();
@@ -147,7 +225,7 @@ public class LevelEditorWindow : EditorWindow
         if (GUILayout.Button("生成游戏立方体"))
             MakeGameCube();
         EditorGUILayout.HelpBox("生成游戏立方体，并显示所有平面！！！", MessageType.Info);
-        
+
     }
 
     void OnInspectorGUI()
@@ -159,6 +237,8 @@ public class LevelEditorWindow : EditorWindow
     {
         _windowInstance.CustomSceneGUI(sceneView);
     }
+
+    #region 快捷查看Cube各个平面（旋转Cube）
 
     void SelectCurSide()
     {
@@ -215,15 +295,19 @@ public class LevelEditorWindow : EditorWindow
         }
     }
 
+    #endregion
+
     void MakeInitMaps()
     {
         if (CubeState.initCompleted)
             return;
+        Cube.position = new Vector3(0, 0, MapBase / 2);
+        Cube.localScale = new Vector3(MapBase, MapBase, MapBase);
         for (int side = 0; side < 6; side++)
         {
-            for (int row = 0; row < 16; row++)
+            for (int row = 0; row < MapBase; row++)
             {
-                for (int col = 0; col < 16; col++)
+                for (int col = 0; col < MapBase; col++)
                 {
                     MakeOoneMap(side, new Vector3(col, row, 0));
                 }
@@ -236,19 +320,28 @@ public class LevelEditorWindow : EditorWindow
     //生成单个地块
     void MakeOoneMap(int side, Vector3 pos, bool isInit = true)
     {
-        GameObject prefab = AssetDatabase.LoadAssetAtPath(assetPath, typeof(GameObject)) as GameObject;
+        GameObject prefab;
+        if (IsMINI)
+            prefab = AssetDatabase.LoadAssetAtPath(mapM_Path, typeof(GameObject)) as GameObject;
+        else
+            prefab = AssetDatabase.LoadAssetAtPath(mapS_Path, typeof(GameObject)) as GameObject;
+
         if (prefab == null)
         {
             Debug.Log("prefab is null!!!");
             return;
         }
+
         GameObject instance = GameObject.Instantiate(prefab) as GameObject;
         instance.transform.FindChild("map").GetComponent<SpriteRenderer>().color = randomColor[side];
         if (isInit)
+        {
+            instance.transform.position = InitMapPos();
             instance.transform.position += pos;
+        }
         else
         {
-            Vector3 mapPos=Vector3.zero;
+            Vector3 mapPos = Vector3.zero;
             if (ReturnMapRectPos(pos, out mapPos))
             {
                 instance.transform.position = mapPos;
@@ -259,36 +352,70 @@ public class LevelEditorWindow : EditorWindow
                 Debug.LogError("destory");
             }
         }
-        
+
+        if (!instance)
+            return;
         instance.transform.SetParent(Sides[side]);
     }
 
 
-    //初始化地块rect集合
-    void InitMapRects()
+    //初始化标准地块rect集合
+    void InitSMapRects()
     {
-        for (int row = 0; row < 16; row++)
+        for (int row = 0; row < MapBase; row++)
         {
-            for (int col = 0; col < 16; col++)
+            for (int col = 0; col < MapBase; col++)
             {
-                Vector3 initialPos = new Vector3(-7.5f, -7.5f, 0);
+                Vector3 initialPos = InitMapPos();
                 initialPos += new Vector3(col, row, 0);
                 Rect rect = new Rect(Vector2.zero, Vector2.one);
                 rect.center = initialPos;
-                _mapRectList.Add(rect);
+                _mapS_RectList.Add(rect);
             }
         }
     }
 
+    //
+    void InitMMapRects()
+    {
+        int baseNum = MapBase * 2;
+        for (int row = 0; row < baseNum; row++)
+        {
+            for (int col = 0; col < baseNum; col++)
+            {
+                Vector3 initialPos = InitMapPos();
+                initialPos += new Vector3(col * 0.5f, row * 0.5f, 0);
+                Rect rect = new Rect(Vector2.zero, new Vector2(0.5f, 0.5f));
+                rect.center = initialPos;
+                _mapM_RectList.Add(rect);
+            }
+        }
+    }
+
+    //初始化起始位置
+    Vector3 InitMapPos()
+    {
+        int baseNum = MapBase / 2;
+        if (IsMINI)
+            return new Vector3(-(baseNum - 0.25f), -(baseNum - 0.25f), 0);
+        else
+            return new Vector3(-(baseNum - 0.5f), -(baseNum - 0.5f), 0);
+    }
 
     //判断当前鼠标点的地块位置
     bool ReturnMapRectPos(Vector3 curPos, out Vector3 mapPos)
     {
-        for (int i = 0; i < MapRectList.Count; i++)
+        List<Rect> copy = new List<Rect>();
+        if (IsMINI)
+            copy = MapM_RectList;
+        else
+            copy = MapS_RectList;
+
+        for (int i = 0; i < copy.Count; i++)
         {
-            if (!MapRectList[i].Contains(curPos,true))
+            if (!copy[i].Contains(curPos, true))
                 continue;
-            mapPos = MapRectList[i].center;
+            mapPos = copy[i].center;
             return true;
         }
         mapPos = Vector3.zero;
@@ -374,7 +501,7 @@ public class LevelEditorWindow : EditorWindow
             return;
         //Camera cameara = sceneView.camera;
         Ray ray = HandleUtility.GUIPointToWorldRay(e.mousePosition);
-        
+
 
         if (e.isMouse && e.type == EventType.MouseDown)
         {

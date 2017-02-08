@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,18 +13,31 @@ public class LevelOrigin : MonoBehaviour
     public int gearCount;
     //双cube场景
     public bool doubleCube;
+    private Vector3 _spawanPoint;
 
     void Start()
     {
+        _spawanPoint = transform.position;
         LevelMgr.It.InitScene(this);
-
     }
 
 
-    public void SpawnPlayer(Transform player)
+    public void SpawnPlayer(PlayerCtrl player)
     {
-        LevelMgr.It.Player.PlayerTrans.position = transform.position;
-        
+
+        StartCoroutine(SpawnPlayerAni(player));
+    }
+
+    IEnumerator SpawnPlayerAni(PlayerCtrl player)
+    {
+        player.PlayerTrans.position = _spawanPoint;
+        yield return new WaitForSeconds(0.5f);
+        player.SwitchShow();
+
+        yield return null;
+
+        player.ctrlActive = true;
+
     }
 }
 

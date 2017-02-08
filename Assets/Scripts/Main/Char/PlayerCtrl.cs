@@ -20,6 +20,7 @@ public class PlayerCtrl : MonoBehaviour
 
     //控制器可用
     public bool ctrlActive;
+    
     private Transform _playerTrans;
 
     public Transform PlayerTrans
@@ -83,7 +84,6 @@ public class PlayerCtrl : MonoBehaviour
         _rigidbody = transform.GetComponent<Rigidbody>();
         _playerCollider = transform.GetComponent<BoxCollider>();
         SetRaysParameters();
-
     }
 
     void Start()
@@ -128,7 +128,8 @@ public class PlayerCtrl : MonoBehaviour
             jump();
         }
 
-        EveryFrame();
+        if (ctrlActive)
+            EveryFrame();
 
         if (ctrlActive)
         {
@@ -183,8 +184,8 @@ public class PlayerCtrl : MonoBehaviour
     //发射墙壁检测射线
     private void CastRaysToTheSides()
     {
-        Vector3 rayCastFromBottom = new Vector3(_rayBoundsRectangle.center.x, _rayBoundsRectangle.yMin + _extendOffset * 0.2f, 0);
-        Vector3 rayCastFromUp = new Vector3(_rayBoundsRectangle.center.x, _rayBoundsRectangle.yMax - _extendOffset * 0.2f, 0);
+        Vector3 rayCastFromBottom = new Vector3(_rayBoundsRectangle.center.x, _rayBoundsRectangle.yMin + _extendOffset * 0.5f, 0);
+        Vector3 rayCastFromUp = new Vector3(_rayBoundsRectangle.center.x, _rayBoundsRectangle.yMax - _extendOffset * 0.5f, 0);
 
         float rayLength = Mathf.Abs(_moveVelocity * Time.deltaTime) + _rayBoundsRectangle.width * 0.5f + _extendOffset;
 
@@ -209,7 +210,7 @@ public class PlayerCtrl : MonoBehaviour
 
                     isWallEdge = true;
                     //防止穿墙的位置重置（通用原理）
-                    this.PlayerTrans.position = new Vector3(hitsStorage.point.x + dir * _rayBoundsRectangle.width * 0.5f, PlayerTrans.position.y, 0);
+                    //this.PlayerTrans.position = new Vector3(hitsStorage.point.x + dir * _rayBoundsRectangle.width * 0.5f, PlayerTrans.position.y, 0);
 
                     return;
                 }
@@ -225,7 +226,7 @@ public class PlayerCtrl : MonoBehaviour
                     return;
 
                 isWallEdge = true;
-                this.PlayerTrans.position = new Vector3(hitsStorage.point.x - dir * _rayBoundsRectangle.width * 0.5f, PlayerTrans.position.y, 0);
+                //this.PlayerTrans.position = new Vector3(hitsStorage.point.x - dir * _rayBoundsRectangle.width * 0.5f, PlayerTrans.position.y, 0);
 
                 return;
             }
@@ -264,6 +265,7 @@ public class PlayerCtrl : MonoBehaviour
     //发射地面检测射线
     private void CastRaysBelow()
     {
+        
         Vector3 verticalRayCastFromLeft = new Vector3(_rayBoundsRectangle.xMin + _extendOffset * 4,
                                                         _rayBoundsRectangle.center.y, 0);
         Vector3 verticalRayCastToRight = new Vector3(_rayBoundsRectangle.xMax - _extendOffset * 4,
@@ -377,15 +379,31 @@ public class PlayerCtrl : MonoBehaviour
     }
 
 
+    public void KillSelf()
+    {
+        SwitchShow();
+        ctrlActive = false;
+        
+        LevelMgr.It.SpawnPlayer();
+    }
+
+    public void SwitchShow()
+    {
+        bool state = gameObject.activeInHierarchy;
+        gameObject.SetActive(!state);
+    }
+
+
     public void StoreState()
     {
         _rigidbody.constraints = RigidbodyConstraints.FreezeAll;
         _checkingBounds = false;
+
     }
 
     public void RevertState()
     {
-        //_rigidbody.constraints = RigidbodyConstraints.None;
+        
         _rigidbody.constraints = RigidbodyConstraints.FreezePositionZ;
         _rigidbody.freezeRotation = true;
         _checkingBounds = true;
