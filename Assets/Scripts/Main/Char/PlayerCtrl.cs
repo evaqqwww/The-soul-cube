@@ -196,14 +196,14 @@ public class PlayerCtrl : MonoBehaviour
         {
             Vector3 rayOriginPoint = Vector3.Lerp(rayCastFromBottom, rayCastFromUp, (float)i / (float)(rayCount - 1));
 
-            if (/*_bothSideRay*/true)
+            if (_bothSideRay)
             {
                 hitsStorage = SystemUtil.RayCast(rayOriginPoint, -dir * Vector3.right, rayLength, whatIsGround, Color.black, true);
 
                 if (hitsStorage.collider != null)
                 {
                     if (_moveVelocity == 0)
-                        continue;
+                        return;
                     //判断墙壁和移动方向一致性
                     if (Math.Sign(_moveVelocity) - dir == 0)
                         return;
@@ -221,7 +221,7 @@ public class PlayerCtrl : MonoBehaviour
             if (hitsStorage.collider != null)
             {
                 if (_moveVelocity == 0)
-                    continue;
+                    return;
                 if (Math.Sign(_moveVelocity) + dir == 0)
                     return;
 
