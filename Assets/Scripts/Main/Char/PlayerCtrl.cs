@@ -129,16 +129,18 @@ public class PlayerCtrl : MonoBehaviour
         }
 
         if (ctrlActive)
-            EveryFrame();
-
-        if (ctrlActive)
         {
 #if UNITY_EDITOR||UNITY_STANDALONE
             _moveVelocity = moveSpeed * Input.GetAxisRaw("Horizontal");
 #else
-            _moveVelocity = moveSpeed * CrossPlatformInputManager.It.GetValue;
+             _moveVelocity = moveSpeed * CrossPlatformInputManager.It.GetValue;
 #endif
         }
+
+        SetRaysParameters();
+
+        if (ctrlActive)
+            EveryFrame();
 
         //朝向和行走状态
         if (ctrlActive && Input.GetAxis("Horizontal") > 0.1f || ctrlActive && CrossPlatformInputManager.It.GetValue > 0.5f)
@@ -162,8 +164,9 @@ public class PlayerCtrl : MonoBehaviour
         _rigidbody.velocity = new Vector2(_moveVelocity, _rigidbody.velocity.y);
 
         SetRaysParameters();
-
+       
         CheckBoundsEdge();
+
     }
 
     //跳跃
@@ -187,7 +190,7 @@ public class PlayerCtrl : MonoBehaviour
         Vector3 rayCastFromBottom = new Vector3(_rayBoundsRectangle.center.x, _rayBoundsRectangle.yMin + _extendOffset * 0.5f, 0);
         Vector3 rayCastFromUp = new Vector3(_rayBoundsRectangle.center.x, _rayBoundsRectangle.yMax - _extendOffset * 0.5f, 0);
 
-        float rayLength = Mathf.Abs(_moveVelocity * Time.deltaTime) + _rayBoundsRectangle.width * 0.5f + _extendOffset;
+        float rayLength = /*Mathf.Abs(_moveVelocity * Time.deltaTime)*/ + _rayBoundsRectangle.width * 0.5f + _extendOffset;
 
         int dir = facingRight ? 1 : -1;
         RaycastHit hitsStorage = new RaycastHit();
@@ -196,7 +199,7 @@ public class PlayerCtrl : MonoBehaviour
         {
             Vector3 rayOriginPoint = Vector3.Lerp(rayCastFromBottom, rayCastFromUp, (float)i / (float)(rayCount - 1));
 
-            if (_bothSideRay)
+            if (/*_bothSideRay*/true)
             {
                 hitsStorage = SystemUtil.RayCast(rayOriginPoint, -dir * Vector3.right, rayLength, whatIsGround, Color.black, true);
 
@@ -206,8 +209,11 @@ public class PlayerCtrl : MonoBehaviour
                         return;
                     //判断墙壁和移动方向一致性
                     if (Math.Sign(_moveVelocity) - dir == 0)
+                    {
+                        isWallEdge = false;
                         return;
-
+                    }
+                        
                     isWallEdge = true;
                     //防止穿墙的位置重置（通用原理）
                     //this.PlayerTrans.position = new Vector3(hitsStorage.point.x + dir * _rayBoundsRectangle.width * 0.5f, PlayerTrans.position.y, 0);
@@ -223,7 +229,10 @@ public class PlayerCtrl : MonoBehaviour
                 if (_moveVelocity == 0)
                     return;
                 if (Math.Sign(_moveVelocity) + dir == 0)
+                {
+                    isWallEdge = false;
                     return;
+                }
 
                 isWallEdge = true;
                 //this.PlayerTrans.position = new Vector3(hitsStorage.point.x - dir * _rayBoundsRectangle.width * 0.5f, PlayerTrans.position.y, 0);

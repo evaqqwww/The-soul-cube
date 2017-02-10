@@ -33,8 +33,9 @@ public class LevelEditorWindow : EditorWindow
 
     private List<Transform> _sides = new List<Transform>();
 
-    private Color[] randomColor = new Color[6] { Color.blue, Color.green, Color.magenta, Color.red, Color.white, Color.yellow };
-
+    private Color[] randomColor = new Color[6] { new Color(48/255.0f, 97/255.0f, 135/255.0f), new Color(48/255.0f, 135/255.0f, 85/255.0f), new Color(146/255.0f, 70/255.0f, 111/255.0f), 
+                                                 new Color(153/255.0f, 54/255.0f, 41/255.0f), new Color(177/255.0f, 177/255.0f, 177/255.0f), new Color(192/255.0f, 164/255.0f, 77/255.0f) };
+    
     private List<Transform> Sides
     {
         get
@@ -49,13 +50,13 @@ public class LevelEditorWindow : EditorWindow
         }
     }
 
-    private CubeState _cubeState;
-    private CubeState CubeState
+    private CubeState _curState;
+    private CubeState CurState
     {
         get
         {
-            _cubeState = Cube.GetComponent<CubeState>();
-            return _cubeState;
+            _curState = Cube.GetComponent<CubeState>();
+            return _curState;
         }
     }
 
@@ -66,18 +67,18 @@ public class LevelEditorWindow : EditorWindow
     {
         get
         {
-            return CubeState.mapBase;
+            return CurState.mapBase;
         }
         set
         {
-            CubeState.mapBase = value;
+            CurState.mapBase = value;
         }
     }
 
     //标准地图块
-    private string mapS_Path = @"Assets\Resources\Prefabs\DemoStandard\mapNode_S.prefab";
+    private string mapS_Path = @"Assets\Resources\Prefabs\Standard\mapNode_S.prefab";
     //mini地图块
-    private string mapM_Path = @"Assets\Resources\Prefabs\DemoStandard\mapNode_M.prefab";
+    private string mapM_Path = @"Assets\Resources\Prefabs\Standard\mapNode_M.prefab";
 
 
     //下拉菜单相关属性
@@ -130,7 +131,10 @@ public class LevelEditorWindow : EditorWindow
         }
     }
 
-    private GameObject[] mSelectObjs = null;
+    private GameObject[] _mSelectObjs = null;
+
+    //旋转换面开关
+    private static bool _isSwitch;
 
     [MenuItem("LevelEditor/Scene Editor")]
     static void Init()
@@ -161,7 +165,7 @@ public class LevelEditorWindow : EditorWindow
 
     void OnSelectionChange()
     {
-        mSelectObjs = Selection.gameObjects;
+        _mSelectObjs = Selection.gameObjects;
     }
 
     void OnGUI()
@@ -202,7 +206,7 @@ public class LevelEditorWindow : EditorWindow
 
         if (GUILayout.Button("初始化地图块"))
             MakeInitMaps();
-        EditorGUILayout.HelpBox("场景初始化后将不被再执行！！！，操作双Cube的场景，注意时刻保持单个方块的显示！！！", MessageType.Warning);
+        EditorGUILayout.HelpBox("场景初始化后将不被再执行！！！操作双Cube的场景，注意时刻保持单个方块的显示！！！", MessageType.Warning);
 
         GUIStyle style_2 = EditorStyles.popup;
         EditorGUILayout.LabelField("根据序号选择显示的平面", EditorStyles.boldLabel);
@@ -219,12 +223,23 @@ public class LevelEditorWindow : EditorWindow
             RotationCurSide();
         EditorGUILayout.EndHorizontal();
 
+        EditorGUILayout.Space();
         if (GUILayout.Button("编辑当前选择的平面"))
             EditSingle();
+        EditorGUILayout.BeginHorizontal();
+        if (GUILayout.Button("编辑当前面美术图", GUILayout.Width(155.0f)))
+            EditCurArts();
+        if (GUILayout.Button("生成到对应平面下", GUILayout.Width(155.0f)))
+            MakeArts();
+        EditorGUILayout.EndHorizontal();
         EditorGUILayout.HelpBox("选择的平面转换到0面的位置，其他平面隐藏，编辑结束后点击“生成游戏立方体”按钮！！！", MessageType.Info);
+        
         if (GUILayout.Button("生成游戏立方体"))
             MakeGameCube();
         EditorGUILayout.HelpBox("生成游戏立方体，并显示所有平面！！！", MessageType.Info);
+
+        if (GUILayout.Button("旋转换面开关"))
+            SideSwitch();
 
     }
 
@@ -299,7 +314,7 @@ public class LevelEditorWindow : EditorWindow
 
     void MakeInitMaps()
     {
-        if (CubeState.initCompleted)
+        if (CurState.initCompleted)
             return;
         Cube.position = new Vector3(0, 0, MapBase / 2);
         Cube.localScale = new Vector3(MapBase, MapBase, MapBase);
@@ -313,7 +328,7 @@ public class LevelEditorWindow : EditorWindow
                 }
             }
         }
-        CubeState.initCompleted = true;
+        CurState.initCompleted = true;
         MakeGameCube();
     }
 
@@ -355,7 +370,7 @@ public class LevelEditorWindow : EditorWindow
 
         if (!instance)
             return;
-        instance.transform.SetParent(Sides[side]);
+        instance.transform.SetParent(Sides[side].FindChild("mapNodes"));
     }
 
 
@@ -425,30 +440,57 @@ public class LevelEditorWindow : EditorWindow
 
     void EditSingle()
     {
-        if (mSelectObjs.Length == 0)
+        if (_mSelectObjs.Length == 0)
         {
             Debug.Log("No selected objects!!!");
             return;
         }
-        if (mSelectObjs.Length > 1)
+        if (_mSelectObjs.Length > 1)
         {
             Debug.Log("Select multiple objects!!!");
             return;
         }
         for (int i = 0; i < 6; i++)
         {
-            if (Sides[i].Equals(mSelectObjs[0].transform))
+            if (Sides[i].Equals(_mSelectObjs[0].transform))
             {
                 Quaternion angle = Quaternion.Euler(Vector3.zero);
                 Sides[i].localRotation = angle;
                 Sides[i].localPosition = new Vector3(0, 0, -0.5f);
                 Sides[i].gameObject.SetActive(true);
-                CubeState.curSide = i;
+                CurState.curSide = i;
                 continue;
             }
             Sides[i].gameObject.SetActive(false);
         }
 
+    }
+
+
+    void EditCurArts()
+    {
+        //Transform artsT = Sides[_curState.curSide].FindChild("Arts");
+        //int count = artsT.childCount;
+        //if (count == 0)
+        //    return;
+        
+        ////List<GameObject> tempList = new List<GameObject>();
+        //for (int i = 0; i < count; i++)
+        //{
+        //    artsT.GetChild(i).parent = null;
+        //    //tempList.Add(artsT.GetChild(i).gameObject);
+        //}
+
+    }
+
+    void MakeArts()
+    {
+        if (_mSelectObjs.Length == 0)
+            return;
+        foreach (var item in _mSelectObjs)
+        {
+            item.transform.parent = Sides[_curState.curSide].FindChild("Arts");
+        }
     }
 
 
@@ -493,6 +535,24 @@ public class LevelEditorWindow : EditorWindow
         }
     }
 
+    void SideSwitch()
+    {
+        if (_isSwitch)
+        {
+            PlayerSettings.SetScriptingDefineSymbolsForGroup(BuildTargetGroup.Standalone, "");
+            PlayerSettings.SetScriptingDefineSymbolsForGroup(BuildTargetGroup.iOS, "");
+            _isSwitch = false;
+            Debug.LogError("旋转换面取消！！！");
+        }
+        else
+        {
+            PlayerSettings.SetScriptingDefineSymbolsForGroup(BuildTargetGroup.Standalone, "sideSwitch");
+            PlayerSettings.SetScriptingDefineSymbolsForGroup(BuildTargetGroup.iOS, "sideSwitch");
+            _isSwitch = true;
+            Debug.LogError("旋转换面开启！！！");
+        }
+    }
+
 
     void CustomSceneGUI(SceneView sceneView)
     {
@@ -505,7 +565,8 @@ public class LevelEditorWindow : EditorWindow
 
         if (e.isMouse && e.type == EventType.MouseDown)
         {
-            if (Physics.Raycast(ray, out _hitInfo, 1000, -1))
+            LayerMask mask = ~(1 << 9 | 1 << 11);
+            if (Physics.Raycast(ray, out _hitInfo, 1000, mask.value))
             {
                 //Debug.DrawRay(ray.origin, ray.direction, Color.yellow);
                 //Vector3 origin = _hitInfo.point;
@@ -515,7 +576,7 @@ public class LevelEditorWindow : EditorWindow
             else
             {
                 if (e.capsLock)
-                    MakeOoneMap(CubeState.curSide, ray.origin, false);
+                    MakeOoneMap(CurState.curSide, ray.origin, false);
             }
         }
 

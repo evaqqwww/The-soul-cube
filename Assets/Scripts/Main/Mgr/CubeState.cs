@@ -17,6 +17,9 @@ public class CubeState : MonoBehaviour
     {
         int baseNum = mapBase / 2;
         LevelMgr.It.levelBounds.extents = new Vector3(baseNum + 0.2f, baseNum + 0.2f, baseNum * 0.1f);
+
+        SideSwitchMgr.It.Init(baseNum);
+
     }
 
 

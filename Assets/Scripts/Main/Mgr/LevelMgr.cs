@@ -120,6 +120,7 @@ public class LevelMgr : Singleton<LevelMgr>
     {
         TurnSidePrepar(_hTurn);
         _hRotation += 90;
+        SideSwitchMgr.It.SwitchBegin(BoundsBehavior.right);
         _hTurn.DORotateQuaternion(Quaternion.AngleAxis(_hRotation, Vector3.up), time).OnComplete(TurnSideCompleted);
     }
 
@@ -127,6 +128,7 @@ public class LevelMgr : Singleton<LevelMgr>
     {
         TurnSidePrepar(_hTurn);
         _hRotation -= 90;
+        SideSwitchMgr.It.SwitchBegin(BoundsBehavior.left);
         _hTurn.DORotateQuaternion(Quaternion.AngleAxis(_hRotation, Vector3.up), time).OnComplete(TurnSideCompleted);
     }
 
@@ -134,6 +136,7 @@ public class LevelMgr : Singleton<LevelMgr>
     {
         TurnSidePrepar(_vTurn);
         _vRotation -= 90;
+        SideSwitchMgr.It.SwitchBegin(BoundsBehavior.up);
         _vTurn.DORotateQuaternion(Quaternion.AngleAxis(_vRotation, Vector3.right), time).OnComplete(TurnSideCompleted);
     }
 
@@ -141,6 +144,7 @@ public class LevelMgr : Singleton<LevelMgr>
     {
         TurnSidePrepar(_vTurn);
         _vRotation += 90;
+        SideSwitchMgr.It.SwitchBegin(BoundsBehavior.down);
         _vTurn.DORotateQuaternion(Quaternion.AngleAxis(_vRotation, Vector3.right), time).OnComplete(TurnSideCompleted);
     }
 

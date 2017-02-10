@@ -51,5 +51,5 @@ public class SystemUtil
         Physics.Raycast(rayOriginPoint, rayDirection, out hit, rayDistance, mask);
         return hit;
     }
-	
+
 }

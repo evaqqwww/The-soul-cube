@@ -1,0 +1,271 @@
+fileFormatVersion: 2
+guid: c68c51bfa0f05274686a9dfb64904108
+timeCreated: 1486716896
+licenseType: Pro
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: aniItem_1_0
+    21300002: aniItem_1_1
+    21300004: aniItem_1_2
+    21300006: aniItem_1_3
+    21300008: aniItem_1_4
+    21300010: aniItem_1_5
+    21300012: aniItem_1_6
+    21300014: aniItem_1_7
+    21300016: aniItem_1_8
+    21300018: aniItem_1_9
+    21300020: aniItem_1_10
+    21300022: aniItem_1_11
+    21300024: aniItem_1_12
+    21300026: aniItem_1_13
+    21300028: aniItem_1_14
+    21300030: aniItem_1_15
+    21300032: aniItem_1_16
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 7
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: -1
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: aniItem_1_0
+      rect:
+        serializedVersion: 2
+        x: 3
+        y: 595
+        width: 228
+        height: 427
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: aniItem_1_1
+      rect:
+        serializedVersion: 2
+        x: 235
+        y: 696
+        width: 297
+        height: 319
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: aniItem_1_2
+      rect:
+        serializedVersion: 2
+        x: 534
+        y: 768
+        width: 400
+        height: 254
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: aniItem_1_4
+      rect:
+        serializedVersion: 2
+        x: 286
+        y: 636
+        width: 102
+        height: 60
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: aniItem_1_5
+      rect:
+        serializedVersion: 2
+        x: 534
+        y: 658
+        width: 108
+        height: 108
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: aniItem_1_7
+      rect:
+        serializedVersion: 2
+        x: 235
+        y: 601
+        width: 48
+        height: 93
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: aniItem_1_8
+      rect:
+        serializedVersion: 2
+        x: 348
+        y: 360
+        width: 190
+        height: 274
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: aniItem_1_9
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 242
+        width: 343
+        height: 351
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: aniItem_1_10
+      rect:
+        serializedVersion: 2
+        x: 348
+        y: 251
+        width: 108
+        height: 107
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: aniItem_1_11
+      rect:
+        serializedVersion: 2
+        x: 458
+        y: 251
+        width: 108
+        height: 107
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: aniItem_1_12
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 21
+        width: 108
+        height: 218
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: aniItem_1_13
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 36
+        width: 104
+        height: 204
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: aniItem_1_14
+      rect:
+        serializedVersion: 2
+        x: 219
+        y: 66
+        width: 207
+        height: 174
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: aniItem_1_15
+      rect:
+        serializedVersion: 2
+        x: 430
+        y: 73
+        width: 209
+        height: 175
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: aniItem_1_16
+      rect:
+        serializedVersion: 2
+        x: 219
+        y: 17
+        width: 51
+        height: 45
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
