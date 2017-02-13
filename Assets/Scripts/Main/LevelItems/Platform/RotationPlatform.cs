@@ -15,7 +15,8 @@ public class RotationPlatform : Platform
     public void Start()
     {
         _aniForward = true;
-        _tween = transform.DORotate(transform.localRotation.eulerAngles + new Vector3(0, 0, 90.0f), 0.3f, RotateMode.LocalAxisAdd).SetAutoKill(false);
+        _tween = transform.DORotate(transform.localRotation.eulerAngles + new Vector3(0, 0, 90.0f), 0.3f, RotateMode.LocalAxisAdd)
+                 .SetAutoKill(false).OnComplete(RevertState);
         _tween.Pause();
     }
 
@@ -30,6 +31,7 @@ public class RotationPlatform : Platform
         }
         else
         {
+            _tween.OnRewind(RevertState);
             _tween.PlayBackwards();
             _aniForward = true;
         }

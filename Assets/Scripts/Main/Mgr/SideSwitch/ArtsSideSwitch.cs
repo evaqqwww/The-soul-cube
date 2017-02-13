@@ -29,7 +29,6 @@ public class ArtsSideSwitch : MonoBehaviour
 
     private void SwitchSide()
     {
-        //gameObject.SetActive(!gameObject.activeInHierarchy);
         _renderer.enabled = !_renderer.enabled;
     }
 

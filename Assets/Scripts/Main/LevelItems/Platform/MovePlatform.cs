@@ -39,15 +39,18 @@ public class MovePlatform : Platform
         
         _aniForward = true;
         if (_ishori)
-            _tween = transform.DOMoveX(transform.localPosition.x + dis * _value, time).SetAutoKill(false);
+            _tween = transform.DOMoveX(transform.localPosition.x + dis * _value, time)
+                     .SetAutoKill(false).OnComplete(RevertState);
         else
-            _tween = transform.DOMoveY(transform.localPosition.y + dis * _value, time).SetAutoKill(false);
+            _tween = transform.DOMoveY(transform.localPosition.y + dis * _value, time)
+                     .SetAutoKill(false).OnComplete(RevertState);
 
         _tween.Pause();
     }
 
     public override void StartAni()
     {
+
         if (_aniForward)
         {
             _tween.PlayForward();
@@ -55,6 +58,7 @@ public class MovePlatform : Platform
         }
         else
         {
+            _tween.OnRewind(RevertState);
             _tween.PlayBackwards();
             _aniForward = true;
         }

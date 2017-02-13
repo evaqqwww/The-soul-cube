@@ -11,4 +11,9 @@ public class Platform : MonoBehaviour
     {
 
     }
+
+    public void RevertState()
+    {
+        LevelMgr.It.Player.RevertState();
+    }
 }

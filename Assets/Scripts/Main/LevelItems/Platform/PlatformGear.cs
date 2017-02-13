@@ -38,7 +38,10 @@ public class PlatformGear : MonoBehaviour
             //transform.localScale = new Vector3(_left ? _scale.x : -_scale.x, _scale.y, _scale.z);
             //_left = !_left;
             if (other.transform.up.y == transform.up.y && LevelMgr.It.Player.falling)
+            {
+                LevelMgr.It.Player.StoreState();
                 _platform.StartAni();
+            }
         }
             
     }

@@ -294,7 +294,7 @@ public class PlayerCtrl : MonoBehaviour
             {
                 this.isGround = true;
                 _rigidbody.useGravity = false;
-                _rigidbody.velocity = new Vector2(_moveVelocity, 0);
+                //_rigidbody.velocity = new Vector2(_moveVelocity, 0);
                 this.PlayerTrans.position = new Vector3(PlayerTrans.position.x, hitsStorage.point.y + _rayBoundsRectangle.height * 0.5f, 0);
                 return;
             }
@@ -405,6 +405,7 @@ public class PlayerCtrl : MonoBehaviour
 
     public void StoreState()
     {
+        ctrlActive = false;
         _rigidbody.constraints = RigidbodyConstraints.FreezeAll;
         _checkingBounds = false;
 
@@ -412,7 +413,7 @@ public class PlayerCtrl : MonoBehaviour
 
     public void RevertState()
     {
-        
+        ctrlActive = true;
         _rigidbody.constraints = RigidbodyConstraints.FreezePositionZ;
         _rigidbody.freezeRotation = true;
         _checkingBounds = true;
