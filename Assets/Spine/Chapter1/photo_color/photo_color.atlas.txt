@@ -1,0 +1,48 @@
+
+photo_color.png
+size: 256,256
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+eyel
+  rotate: false
+  xy: 202, 222
+  size: 9, 11
+  orig: 9, 11
+  offset: 0, 0
+  index: -1
+eyer
+  rotate: false
+  xy: 2, 2
+  size: 9, 13
+  orig: 9, 13
+  offset: 0, 0
+  index: -1
+girl1
+  rotate: false
+  xy: 138, 146
+  size: 62, 87
+  orig: 62, 87
+  offset: 0, 0
+  index: -1
+girl2
+  rotate: false
+  xy: 93, 33
+  size: 61, 72
+  orig: 61, 72
+  offset: 0, 0
+  index: -1
+kuang1
+  rotate: false
+  xy: 2, 107
+  size: 134, 126
+  orig: 134, 126
+  offset: 0, 0
+  index: -1
+kuang2
+  rotate: false
+  xy: 2, 17
+  size: 89, 88
+  orig: 89, 88
+  offset: 0, 0
+  index: -1

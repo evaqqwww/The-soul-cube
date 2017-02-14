@@ -76,9 +76,9 @@ public class LevelEditorWindow : EditorWindow
     }
 
     //标准地图块
-    private string mapS_Path = @"Assets\Resources\Prefabs\Standard\mapNode_S.prefab";
+    private string mapS_Path = @"Assets\Resources\Prefabs\StandardItems\mapNode_S.prefab";
     //mini地图块
-    private string mapM_Path = @"Assets\Resources\Prefabs\Standard\mapNode_M.prefab";
+    private string mapM_Path = @"Assets\Resources\Prefabs\StandardItems\mapNode_M.prefab";
 
 
     //下拉菜单相关属性

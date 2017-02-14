@@ -1,0 +1,41 @@
+
+photo_black.png
+size: 512,128
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+body1
+  rotate: false
+  xy: 300, 13
+  size: 70, 110
+  orig: 70, 110
+  offset: 0, 0
+  index: -1
+body2
+  rotate: false
+  xy: 226, 7
+  size: 72, 116
+  orig: 72, 116
+  offset: 0, 0
+  index: -1
+eyel
+  rotate: false
+  xy: 372, 78
+  size: 15, 21
+  orig: 15, 21
+  offset: 0, 0
+  index: -1
+eyer
+  rotate: false
+  xy: 372, 101
+  size: 38, 22
+  orig: 38, 22
+  offset: 0, 0
+  index: -1
+jingzi1
+  rotate: true
+  xy: 2, 2
+  size: 121, 222
+  orig: 121, 222
+  offset: 0, 0
+  index: -1

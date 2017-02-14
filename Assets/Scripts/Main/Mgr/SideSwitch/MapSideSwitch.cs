@@ -37,8 +37,8 @@ public class MapSideSwitch : MonoBehaviour
 
     public void Start()
     {
-        _backRenderer.sprite = Resources.Load<Sprite>("Standard/mapNode");
-        _backRenderer.color = Color.white;
+        //_backRenderer.sprite = Resources.Load<Sprite>("Standard/mapNode");
+        //_backRenderer.color = Color.white;
         if (_backRenderer)
             _backRenderer.sprite.name = "1_back";
 

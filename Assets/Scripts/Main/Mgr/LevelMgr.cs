@@ -111,7 +111,7 @@ public class LevelMgr : Singleton<LevelMgr>
     //初始化全局事件
     private void InitEvent()
     {
-
+        
     }
 
     #region CubeTurnSide

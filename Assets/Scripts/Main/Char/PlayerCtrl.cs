@@ -195,31 +195,28 @@ public class PlayerCtrl : MonoBehaviour
         int dir = facingRight ? 1 : -1;
         RaycastHit hitsStorage = new RaycastHit();
 
-        for (int i = 0; i < rayCount; i++)
+        for (int i = 0; i < 4; i++)
         {
-            Vector3 rayOriginPoint = Vector3.Lerp(rayCastFromBottom, rayCastFromUp, (float)i / (float)(rayCount - 1));
+            Vector3 rayOriginPoint = Vector3.Lerp(rayCastFromBottom, rayCastFromUp, (float)i / (float)(4 - 1));
 
-            if (/*_bothSideRay*/true)
+            hitsStorage = SystemUtil.RayCast(rayOriginPoint, -dir * Vector3.right, rayLength, whatIsGround, Color.black, true);
+
+            if (hitsStorage.collider != null)
             {
-                hitsStorage = SystemUtil.RayCast(rayOriginPoint, -dir * Vector3.right, rayLength, whatIsGround, Color.black, true);
-
-                if (hitsStorage.collider != null)
+                if (_moveVelocity == 0)
+                    return;
+                //判断墙壁和移动方向一致性
+                if (Math.Sign(_moveVelocity) - dir == 0)
                 {
-                    if (_moveVelocity == 0)
-                        return;
-                    //判断墙壁和移动方向一致性
-                    if (Math.Sign(_moveVelocity) - dir == 0)
-                    {
-                        isWallEdge = false;
-                        return;
-                    }
-                        
-                    isWallEdge = true;
-                    //防止穿墙的位置重置（通用原理）
-                    //this.PlayerTrans.position = new Vector3(hitsStorage.point.x + dir * _rayBoundsRectangle.width * 0.5f, PlayerTrans.position.y, 0);
-
+                    isWallEdge = false;
                     return;
                 }
+
+                isWallEdge = true;
+                //防止穿墙的位置重置（通用原理）
+                //    this.PlayerTrans.position = new Vector3(hitsStorage.point.x + dir * _rayBoundsRectangle.width * 0.5f, PlayerTrans.position.y, 0);
+
+                return;
             }
 
             hitsStorage = SystemUtil.RayCast(rayOriginPoint, dir * Vector3.right, rayLength, whatIsGround, Color.black, true);
@@ -235,7 +232,7 @@ public class PlayerCtrl : MonoBehaviour
                 }
 
                 isWallEdge = true;
-                //this.PlayerTrans.position = new Vector3(hitsStorage.point.x - dir * _rayBoundsRectangle.width * 0.5f, PlayerTrans.position.y, 0);
+                //    this.PlayerTrans.position = new Vector3(hitsStorage.point.x - dir * _rayBoundsRectangle.width * 0.5f, PlayerTrans.position.y, 0);
 
                 return;
             }
@@ -247,9 +244,9 @@ public class PlayerCtrl : MonoBehaviour
     //发射顶部检测射线
     private void CastRaysAbove()
     {
-        Vector3 verticalRayCastFromLeft = new Vector3(_rayBoundsRectangle.xMin + _extendOffset,
+        Vector3 verticalRayCastFromLeft = new Vector3(_rayBoundsRectangle.xMin + _extendOffset * 4,
                                                         _rayBoundsRectangle.center.y, 0);
-        Vector3 verticalRayCastToRight = new Vector3(_rayBoundsRectangle.xMax - _extendOffset,
+        Vector3 verticalRayCastToRight = new Vector3(_rayBoundsRectangle.xMax - _extendOffset * 4,
                                                    _rayBoundsRectangle.center.y, 0);
         float rayLength = Mathf.Abs(_rigidbody.velocity.y * Time.deltaTime) + _rayBoundsRectangle.height * 0.5f + _extendOffset;
 
@@ -275,9 +272,9 @@ public class PlayerCtrl : MonoBehaviour
     private void CastRaysBelow()
     {
         
-        Vector3 verticalRayCastFromLeft = new Vector3(_rayBoundsRectangle.xMin + _extendOffset * 4,
+        Vector3 verticalRayCastFromLeft = new Vector3(_rayBoundsRectangle.xMin + _extendOffset * 3.5f,
                                                         _rayBoundsRectangle.center.y, 0);
-        Vector3 verticalRayCastToRight = new Vector3(_rayBoundsRectangle.xMax - _extendOffset * 4,
+        Vector3 verticalRayCastToRight = new Vector3(_rayBoundsRectangle.xMax - _extendOffset * 3.5f,
                                                    _rayBoundsRectangle.center.y, 0);
         float rayLength = Mathf.Abs(_rigidbody.velocity.y * Time.deltaTime) + _rayBoundsRectangle.height * 0.5f + _extendOffset;
 
@@ -294,7 +291,7 @@ public class PlayerCtrl : MonoBehaviour
             {
                 this.isGround = true;
                 _rigidbody.useGravity = false;
-                //_rigidbody.velocity = new Vector2(_moveVelocity, 0);
+                _rigidbody.velocity = new Vector2(_moveVelocity, 0);
                 this.PlayerTrans.position = new Vector3(PlayerTrans.position.x, hitsStorage.point.y + _rayBoundsRectangle.height * 0.5f, 0);
                 return;
             }

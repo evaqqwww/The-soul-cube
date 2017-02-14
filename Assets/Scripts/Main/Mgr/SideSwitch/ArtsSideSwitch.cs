@@ -10,6 +10,8 @@ public class ArtsSideSwitch : MonoBehaviour
     private SpriteRenderer _renderer;
     private SideDevice _sideDev;
 
+    public bool isAni;
+
     public void Awake()
     {
         _renderer = transform.GetComponent<SpriteRenderer>();
@@ -29,7 +31,10 @@ public class ArtsSideSwitch : MonoBehaviour
 
     private void SwitchSide()
     {
-        _renderer.enabled = !_renderer.enabled;
+        if (isAni)
+            this.gameObject.SetActive(!this.gameObject.activeInHierarchy);
+        else
+            _renderer.enabled = !_renderer.enabled;
     }
 
 

@@ -10,16 +10,22 @@ public class VoidGear : MonoBehaviour
     public int type;
 
     private SpriteRenderer _renderer;
+    private BoxCollider _collider;
+
 
     public void Awake()
     {
         _renderer = this.GetComponent<SpriteRenderer>();
+        _collider = transform.GetComponent<BoxCollider>();
+
     }
 
 
     public void Start()
     {
         _renderer.color = VoidPlatformMgr.It.GetColorByIndex(type);
+        LevelMgr.It.turnSideGlobalHandle += SwitchCollider;
+
     }
 
 
@@ -33,5 +39,10 @@ public class VoidGear : MonoBehaviour
             VoidPlatformMgr.It.SwitchVoidState(type);
         }
 
+    }
+
+    private void SwitchCollider()
+    {
+        _collider.enabled = !_collider.enabled;
     }
 }
