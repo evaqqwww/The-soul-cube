@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 0ff920f9335920e4c9a50309825b82bd
-timeCreated: 1486713698
+timeCreated: 1487134504
 licenseType: Pro
 TextureImporter:
   fileIDToRecycleName:
@@ -8,6 +8,7 @@ TextureImporter:
     21300002: E_f
     21300004: 1_s
     21300006: 1_back
+    21300008: 1_back
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -31,7 +32,7 @@ TextureImporter:
   cubemapConvolutionExponent: 1.5
   seamlessCubemap: 0
   textureFormat: -1
-  maxTextureSize: 2048
+  maxTextureSize: 4096
   textureSettings:
     filterMode: -1
     aniso: -1
@@ -68,7 +69,7 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      tessellationDetail: 0
+      tessellationDetail: -1
     outline: []
   spritePackingTag: 
   userData: 

@@ -52,7 +52,7 @@ TextureImporter:
   cubemapConvolutionExponent: 1.5
   seamlessCubemap: 0
   textureFormat: -3
-  maxTextureSize: 2048
+  maxTextureSize: 4096
   textureSettings:
     filterMode: -1
     aniso: 16
@@ -78,96 +78,18 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: bieguanwo
+      name: bao
       rect:
         serializedVersion: 2
-        x: 2
-        y: 989
-        width: 351
-        height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: xian02
-      rect:
-        serializedVersion: 2
-        x: 354
-        y: 1005
-        width: 125
-        height: 17
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: xian001
-      rect:
-        serializedVersion: 2
-        x: 2
-        y: 970
-        width: 243
-        height: 17
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: tuixiangzi
-      rect:
-        serializedVersion: 2
-        x: 247
-        y: 883
-        width: 104
-        height: 104
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: xian002
-      rect:
-        serializedVersion: 2
-        x: 354
-        y: 986
-        width: 125
-        height: 17
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: xian01
-      rect:
-        serializedVersion: 2
-        x: 2
-        y: 951
-        width: 240
-        height: 17
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: shu02
-      rect:
-        serializedVersion: 2
-        x: 353
-        y: 574
+        x: 112
+        y: 251
         width: 108
-        height: 410
+        height: 108
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      tessellationDetail: 0
+      tessellationDetail: -1
     - serializedVersion: 2
       name: baozhen
       rect:
@@ -180,20 +102,20 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      tessellationDetail: 0
+      tessellationDetail: -1
     - serializedVersion: 2
-      name: shu01
+      name: bieguanwo
       rect:
         serializedVersion: 2
-        x: 214
-        y: 471
-        width: 108
-        height: 409
+        x: 2
+        y: 989
+        width: 350
+        height: 33
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      tessellationDetail: 0
+      tessellationDetail: -1
     - serializedVersion: 2
       name: heimen
       rect:
@@ -206,85 +128,7 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: xian03
-      rect:
-        serializedVersion: 2
-        x: 112
-        y: 810
-        width: 80
-        height: 17
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: xian003
-      rect:
-        serializedVersion: 2
-        x: 112
-        y: 791
-        width: 80
-        height: 17
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: zhuobu02
-      rect:
-        serializedVersion: 2
-        x: 2
-        y: 499
-        width: 108
-        height: 108
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: hongmen
-      rect:
-        serializedVersion: 2
-        x: 324
-        y: 354
-        width: 108
-        height: 218
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: zhuobu
-      rect:
-        serializedVersion: 2
-        x: 2
-        y: 389
-        width: 108
-        height: 108
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: hongzhuan
-      rect:
-        serializedVersion: 2
-        x: 112
-        y: 361
-        width: 108
-        height: 108
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
+      tessellationDetail: -1
     - serializedVersion: 2
       name: heizhuan
       rect:
@@ -297,20 +141,176 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      tessellationDetail: 0
+      tessellationDetail: -1
     - serializedVersion: 2
-      name: bao
+      name: hongmen
+      rect:
+        serializedVersion: 2
+        x: 324
+        y: 354
+        width: 108
+        height: 218
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: hongzhuan
       rect:
         serializedVersion: 2
         x: 112
-        y: 251
+        y: 361
         width: 108
         height: 108
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      tessellationDetail: 0
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: shu01
+      rect:
+        serializedVersion: 2
+        x: 214
+        y: 471
+        width: 108
+        height: 410
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: shu02
+      rect:
+        serializedVersion: 2
+        x: 353
+        y: 574
+        width: 108
+        height: 410
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: tuixiangzi
+      rect:
+        serializedVersion: 2
+        x: 247
+        y: 883
+        width: 104
+        height: 104
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: xian001
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 970
+        width: 243
+        height: 17
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: xian002
+      rect:
+        serializedVersion: 2
+        x: 354
+        y: 986
+        width: 126
+        height: 17
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: xian003
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 791
+        width: 81
+        height: 17
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: xian01
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 951
+        width: 240
+        height: 17
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: xian02
+      rect:
+        serializedVersion: 2
+        x: 354
+        y: 1005
+        width: 126
+        height: 17
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: xian03
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 810
+        width: 81
+        height: 17
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: zhuobu
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 389
+        width: 108
+        height: 108
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: zhuobu02
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 499
+        width: 108
+        height: 108
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: -1
     outline: []
   spritePackingTag: 
   userData: 

@@ -1,0 +1,11 @@
+#
+# Sprite sheet data for Unity.
+#
+# To import these sprites into your Unity project, download "TexturePackerImporter":
+# http://www.codeandweb.com/texturepacker/unity
+#
+# Sprite sheet: mapNode.png (128 x 128)
+# $TexturePacker:SmartUpdate:0c5dcec414d10b0621dd21f5da5d6d5a:7c6f010a3617e09f57f89f0597473a5a:f980ef0478a592c85f9a4e5164ce802f$
+#
+
+1_back;2;22;104;104;0.5;0.5

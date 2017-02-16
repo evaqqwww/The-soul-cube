@@ -1,0 +1,28 @@
+#
+# Sprite sheet data for Unity.
+#
+# To import these sprites into your Unity project, download "TexturePackerImporter":
+# http://www.codeandweb.com/texturepacker/unity
+#
+# Sprite sheet: chapter_1.png (512 x 1024)
+# $TexturePacker:SmartUpdate:3dd80c00ee269b830eb897b4f0bbc413:a680ea807ce9256d801047d89e37b925:c69f5c7f4fbe0fba86c6137662603a07$
+#
+
+bao;112;251;108;108;0.5;0.5
+baozhen;2;829;210;120;0.5;0.5
+bieguanwo;2;989;350;33;0.5;0.5
+heimen;2;609;108;218;0.5;0.5
+heizhuan;2;279;108;108;0.5;0.5
+hongmen;324;354;108;218;0.5;0.5
+hongzhuan;112;361;108;108;0.5;0.5
+shu01;214;471;108;410;0.5;0.5
+shu02;353;574;108;410;0.5;0.5
+tuixiangzi;247;883;104;104;0.5;0.5
+xian001;2;970;243;17;0.5;0.5
+xian002;354;986;126;17;0.5;0.5
+xian003;112;791;81;17;0.5;0.5
+xian01;2;951;240;17;0.5;0.5
+xian02;354;1005;126;17;0.5;0.5
+xian03;112;810;81;17;0.5;0.5
+zhuobu;2;389;108;108;0.5;0.5
+zhuobu02;2;499;108;108;0.5;0.5

@@ -14,17 +14,24 @@ public class LevelOrigin : MonoBehaviour
     //双cube场景
     public bool doubleCube;
     private Vector3 _spawanPoint;
+    private int _mapBase;
+
+    public void Awake()
+    {
+        _mapBase = this.transform.parent.parent.GetComponent<CubeState>().mapBase;
+    }
 
     void Start()
     {
         _spawanPoint = transform.position;
-        LevelMgr.It.InitScene(this);
+        int _base = _mapBase / 2;
+
+        LevelMgr.It.InitScene(this, _base);
     }
 
 
     public void SpawnPlayer(PlayerCtrl player)
     {
-
         StartCoroutine(SpawnPlayerAni(player));
     }
 

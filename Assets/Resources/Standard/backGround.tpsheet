@@ -1,0 +1,15 @@
+#
+# Sprite sheet data for Unity.
+#
+# To import these sprites into your Unity project, download "TexturePackerImporter":
+# http://www.codeandweb.com/texturepacker/unity
+#
+# Sprite sheet: backGround.png (1024 x 1024)
+# $TexturePacker:SmartUpdate:99bae66ca3992797ae93facd82a645bf:48d86d89724616102dce12263cd6f8b5:2c9a39beb730d52e7a8257ea47dd04b0$
+#
+
+beijingse;806;894;128;128;0.5;0.5
+bjxt;706;519;300;223;0.5;0.5
+chenai-01;2;676;400;346;0.5;0.5
+chenai-02;404;744;400;278;0.5;0.5
+chenai-03;404;472;300;270;0.5;0.5

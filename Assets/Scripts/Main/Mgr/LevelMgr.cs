@@ -26,10 +26,7 @@ public class LevelMgr : Singleton<LevelMgr>
                 {
                     for (int i = 0; i < _gameCubes.Length; i++)
                     {
-                        if (_gameCubes[i].name.Equals("Cube_1"))
-                            _cubesTrans[0] = _gameCubes[i].transform;
-                        else
-                            _cubesTrans[1] = _gameCubes[i].transform;
+                        _cubesTrans[i] = _gameCubes[i].transform;
                     }
                 }
             }
@@ -46,6 +43,8 @@ public class LevelMgr : Singleton<LevelMgr>
     private PlayerCtrl _player;
 
     private Transform _hTurn, _vTurn, _singleTurn;
+
+    private CameraCtrl _camCtrl;
 
     private int _vRotation;
     private int _hRotation;
@@ -75,7 +74,7 @@ public class LevelMgr : Singleton<LevelMgr>
         _hTurn = GameObject.FindGameObjectWithTag("hturn").transform;
         _vTurn = GameObject.FindGameObjectWithTag("vturn").transform;
         _singleTurn = GameObject.FindGameObjectWithTag("singleTurn").transform;
-
+        _camCtrl = GameObject.FindGameObjectWithTag("SceneCam").GetComponent<CameraCtrl>();
     }
 
     void Start()
@@ -83,19 +82,22 @@ public class LevelMgr : Singleton<LevelMgr>
 
     }
 
-    public void InitScene(LevelOrigin info)
+    public void InitScene(LevelOrigin info, int baseNum)
     {
         _levelOrigin = info;
         _gearCount = _levelOrigin.gearCount;
-       
+
         _gameCubes = GameObject.FindGameObjectsWithTag("cube");
 
         _player.SwitchShow();
         _levelOrigin.SpawnPlayer(_player);
 
-        int zValue = CubesTrans[0].GetComponent<CubeState>().mapBase / 2;
-        _hTurn.position = new Vector3(0, 0, zValue);
-        _vTurn.position = new Vector3(0, 0, zValue);
+        _hTurn.position = new Vector3(0, 0, baseNum);
+        _vTurn.position = new Vector3(0, 0, baseNum);
+        _camCtrl.InitCamsPos(baseNum);
+
+        LevelMgr.It.levelBounds.extents = new Vector3(baseNum + 0.2f, baseNum + 0.2f, baseNum * 0.1f);
+        SideSwitchMgr.It.Init(baseNum);
 
         _door = GameObject.FindGameObjectWithTag("door").GetComponent<Door>();
         if (_door)

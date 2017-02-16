@@ -9,6 +9,7 @@ public class ArtsSideSwitch : MonoBehaviour
 
     private SpriteRenderer _renderer;
     private SideDevice _sideDev;
+    private LayerMask _initialLayer;
 
     public bool isAni;
 
@@ -21,6 +22,7 @@ public class ArtsSideSwitch : MonoBehaviour
 
     void Start()
     {
+        _initialLayer = this.gameObject.layer;
 #if sideSwitch
         _sideDev.artsSideHandle += SwitchSide;
         if (_sideDev.sideNum == 0)
@@ -33,8 +35,14 @@ public class ArtsSideSwitch : MonoBehaviour
     {
         if (isAni)
             this.gameObject.SetActive(!this.gameObject.activeInHierarchy);
-        else
+        else if (_initialLayer.value != 12)
             _renderer.enabled = !_renderer.enabled;
+        else
+        {
+            this.gameObject.layer = this.gameObject.layer == 8 ? 12 : 8;
+
+        }
+
     }
 
 
