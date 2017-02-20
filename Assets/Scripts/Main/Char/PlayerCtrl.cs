@@ -75,8 +75,8 @@ public class PlayerCtrl : MonoBehaviour
     public bool goUp;
 
     //换面相关参数
-    private Bounds _bounds;
     private bool _checkingBounds;
+    private Bounds _bounds;
    
     void Awake()
     {
@@ -88,7 +88,12 @@ public class PlayerCtrl : MonoBehaviour
 
     void Start()
     {
-        _bounds = LevelMgr.It.levelBounds;
+        //_checkingBounds = false;
+    }
+
+    public void InitBounds(Bounds bound)
+    {
+        _bounds = bound;
         _checkingBounds = true;
     }
 
@@ -322,21 +327,19 @@ public class PlayerCtrl : MonoBehaviour
     {
         if (!_checkingBounds)
             return;
-        if (_bounds.size != Vector3.zero)
-        {
 
-            if (_rayBoundsRectangle.yMax > _bounds.max.y)
-                ApplyBoundsBehavior(BoundsBehavior.up);
+        if (_rayBoundsRectangle.yMax > _bounds.max.y)
+            ApplyBoundsBehavior(BoundsBehavior.up);
 
-            if (_rayBoundsRectangle.yMin < _bounds.min.y)
-                ApplyBoundsBehavior(BoundsBehavior.down);
+        if (_rayBoundsRectangle.yMin < _bounds.min.y)
+            ApplyBoundsBehavior(BoundsBehavior.down);
 
-            if (_rayBoundsRectangle.xMax > _bounds.max.x)
-                ApplyBoundsBehavior(BoundsBehavior.right);
+        if (_rayBoundsRectangle.xMax > _bounds.max.x)
+            ApplyBoundsBehavior(BoundsBehavior.right);
 
-            if (_rayBoundsRectangle.xMin < _bounds.min.x)
-                ApplyBoundsBehavior(BoundsBehavior.left);
-        }
+        if (_rayBoundsRectangle.xMin < _bounds.min.x)
+            ApplyBoundsBehavior(BoundsBehavior.left);
+        
     }
 
     private void ApplyBoundsBehavior(BoundsBehavior behavior)
@@ -359,7 +362,7 @@ public class PlayerCtrl : MonoBehaviour
                 break;
         }
 
-        PlayerTurnSide(behavior);
+        //PlayerTurnSide(behavior);
         StoreState();
     }
 
@@ -395,8 +398,7 @@ public class PlayerCtrl : MonoBehaviour
 
     public void SwitchShow()
     {
-        bool state = gameObject.activeInHierarchy;
-        gameObject.SetActive(!state);
+        gameObject.SetActive(!gameObject.activeInHierarchy);
     }
 
 
@@ -414,6 +416,7 @@ public class PlayerCtrl : MonoBehaviour
         _rigidbody.constraints = RigidbodyConstraints.FreezePositionZ;
         _rigidbody.freezeRotation = true;
         _checkingBounds = true;
+
     }
 
 }

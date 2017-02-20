@@ -11,6 +11,10 @@ public class SCMain : MonoBehaviour
     public void Start()
     {
         UIMgr.It.InitMainUIs();
+
+        GameObject level = Resources.Load<GameObject>("Prefabs/LevelCube/Complete/" + SCApp.It.curlevelName);
+        GameObject.Instantiate<GameObject>(level);
+        InitScene();
        
     }
 

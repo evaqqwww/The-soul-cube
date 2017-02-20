@@ -10,6 +10,14 @@ public class SideSwitchRay : MonoBehaviour
 
     private int _curSide = -1;
 
+    public int CurSide
+    {
+        get
+        {
+            return _curSide;
+        }
+    }
+
     private float _raylength = 10.0f;
 
     private RaycastHit hitsStorage;
@@ -21,15 +29,15 @@ public class SideSwitchRay : MonoBehaviour
 
     public bool launching;
 
-    public bool isLastSide;
+    public bool isPreSide;
 
 
     public void Start()
     {
         launching = true;
-       
+
         hitsStorage = new RaycastHit();
-        
+
     }
 
     public void InitRayParms()
@@ -40,7 +48,9 @@ public class SideSwitchRay : MonoBehaviour
 
     public void Update()
     {
-#if sideSwitch
+
+        if (!LevelMgr.It.isSideSwitch)
+            return;
         if (!launching)
             return;
         hitsStorage = SystemUtil.RayCast(transform.position, transform.forward, _raylength, layerMask, Color.black, true);
@@ -54,22 +64,21 @@ public class SideSwitchRay : MonoBehaviour
             launching = false;
             _curSide = num;
             _curSideDev = _tempSideDev;
-            if (isLastSide)
+            if (isPreSide)
                 SideSwitching();
         }
-#endif
 
     }
 
 
-    public void SideSwitching(bool _isLastSide = true)
+    public void SideSwitching(bool isPre = true)
     {
-        if (_isLastSide)
-            isLastSide = false;
+        if (isPre)
+            isPreSide = false;
 
         _curSideDev.MapSideSwitch();
         _curSideDev.ArtsSideSwitch();
     }
-   
+
 }
 

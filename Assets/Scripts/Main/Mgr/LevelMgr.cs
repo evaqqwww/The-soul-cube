@@ -19,7 +19,7 @@ public class LevelMgr : Singleton<LevelMgr>
         {
             if (_cubesTrans == null)
             {
-                _cubesTrans = new Transform[2];
+                _cubesTrans = new Transform[_gameCubes.Length];
                 if (!_levelOrigin.doubleCube)
                     _cubesTrans[0] = _gameCubes[0].transform;
                 else
@@ -66,6 +66,10 @@ public class LevelMgr : Singleton<LevelMgr>
         }
     }
 
+    //开发阶段字段，后期剔除
+    public bool isSideSwitch;
+
+
 
     protected override void Awake()
     {
@@ -75,6 +79,7 @@ public class LevelMgr : Singleton<LevelMgr>
         _vTurn = GameObject.FindGameObjectWithTag("vturn").transform;
         _singleTurn = GameObject.FindGameObjectWithTag("singleTurn").transform;
         _camCtrl = GameObject.FindGameObjectWithTag("SceneCam").GetComponent<CameraCtrl>();
+
     }
 
     void Start()
@@ -86,18 +91,19 @@ public class LevelMgr : Singleton<LevelMgr>
     {
         _levelOrigin = info;
         _gearCount = _levelOrigin.gearCount;
-
+       
         _gameCubes = GameObject.FindGameObjectsWithTag("cube");
-
-        _player.SwitchShow();
-        _levelOrigin.SpawnPlayer(_player);
 
         _hTurn.position = new Vector3(0, 0, baseNum);
         _vTurn.position = new Vector3(0, 0, baseNum);
         _camCtrl.InitCamsPos(baseNum);
-
-        LevelMgr.It.levelBounds.extents = new Vector3(baseNum + 0.2f, baseNum + 0.2f, baseNum * 0.1f);
         SideSwitchMgr.It.Init(baseNum);
+        
+        levelBounds.extents = new Vector3(baseNum + 0.2f, baseNum + 0.2f, baseNum * 0.1f);
+
+        _player.InitBounds(levelBounds);
+        _player.SwitchShow();
+        _levelOrigin.SpawnPlayer(_player);
 
         _door = GameObject.FindGameObjectWithTag("door").GetComponent<Door>();
         if (_door)
@@ -107,13 +113,18 @@ public class LevelMgr : Singleton<LevelMgr>
     public void ClearWorld()
     {
         turnSideGlobalHandle = InitEvent;
+        //_gameCubes = null;
+        //_cubesTrans = null;
+        _it = null;
+        VoidPlatformMgr.It.UnloadMgr();
+        SideSwitchMgr.It.LevelWorld();
 
     }
 
     //初始化全局事件
     private void InitEvent()
     {
-        
+
     }
 
     #region CubeTurnSide
@@ -166,7 +177,7 @@ public class LevelMgr : Singleton<LevelMgr>
         {
             if (!item)
                 continue;
-                item.parent = null;
+            item.parent = null;
             if (reset)
                 item.rotation = Quaternion.Euler(Vector3.zero);
         }
@@ -210,7 +221,11 @@ public class LevelMgr : Singleton<LevelMgr>
     public void SpawnPlayer()
     {
         ResetParents(true);
+        SideSwitchMgr.It.InitRays();
         _levelOrigin.SpawnPlayer(_player);
+
+        SideSwitchMgr.It.InitSideState();
+
     }
 
     public void UnlockGear()

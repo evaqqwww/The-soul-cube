@@ -1,0 +1,90 @@
+
+bighand.png
+size: 1024,512
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+1
+  rotate: false
+  xy: 966, 395
+  size: 32, 91
+  orig: 32, 91
+  offset: 0, 0
+  index: -1
+2
+  rotate: false
+  xy: 90, 2
+  size: 71, 204
+  orig: 71, 204
+  offset: 0, 0
+  index: -1
+3
+  rotate: true
+  xy: 687, 325
+  size: 161, 177
+  orig: 161, 177
+  offset: 0, 0
+  index: -1
+4
+  rotate: true
+  xy: 319, 207
+  size: 78, 157
+  orig: 78, 157
+  offset: 0, 0
+  index: -1
+5
+  rotate: false
+  xy: 2, 208
+  size: 160, 278
+  orig: 160, 278
+  offset: 0, 0
+  index: -1
+6
+  rotate: false
+  xy: 2, 10
+  size: 86, 196
+  orig: 86, 196
+  offset: 0, 0
+  index: -1
+7
+  rotate: false
+  xy: 497, 314
+  size: 188, 172
+  orig: 188, 172
+  offset: 0, 0
+  index: -1
+8
+  rotate: false
+  xy: 319, 287
+  size: 176, 199
+  orig: 176, 199
+  offset: 0, 0
+  index: -1
+9
+  rotate: false
+  xy: 164, 222
+  size: 153, 264
+  orig: 153, 264
+  offset: 0, 0
+  index: -1
+eye
+  rotate: false
+  xy: 866, 336
+  size: 98, 150
+  orig: 98, 150
+  offset: 0, 0
+  index: -1
+eye1
+  rotate: false
+  xy: 966, 344
+  size: 40, 49
+  orig: 40, 49
+  offset: 0, 0
+  index: -1
+eye2
+  rotate: true
+  xy: 497, 272
+  size: 40, 49
+  orig: 40, 49
+  offset: 0, 0
+  index: -1

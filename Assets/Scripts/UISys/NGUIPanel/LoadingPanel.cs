@@ -115,14 +115,10 @@ public class LoadingPanel : NGUIBasePanel
 
     private void ToShow(HEvent evt)
     {
-        if (evt == null)
-            return;
-        HEventWithParams hp = (HEventWithParams)evt;
-        string scene = (string)hp.paras[0];
-
+        
         Show();
 
-        AsynLoadScene(scene);
+        AsynLoadScene("ChapterLevel");
     }
 
     private void ToClose(HEvent evt)

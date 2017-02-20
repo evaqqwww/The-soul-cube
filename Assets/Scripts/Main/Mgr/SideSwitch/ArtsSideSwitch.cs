@@ -7,42 +7,35 @@ using UnityEngine;
 public class ArtsSideSwitch : MonoBehaviour
 {
 
-    private SpriteRenderer _renderer;
     private SideDevice _sideDev;
-    private LayerMask _initialLayer;
 
-    public bool isAni;
+    //所属平面
+    private int _theSide;
 
     public void Awake()
     {
-        _renderer = transform.GetComponent<SpriteRenderer>();
         _sideDev = transform.parent.parent.GetComponent<SideDevice>();
+        _theSide = _sideDev.sideNum;
     }
-    
+
 
     void Start()
     {
-        _initialLayer = this.gameObject.layer;
-#if sideSwitch
-        _sideDev.artsSideHandle += SwitchSide;
-        if (_sideDev.sideNum == 0)
+        if (!LevelMgr.It.isSideSwitch)
+            return;
+        if (this.gameObject.layer != 12)
             return;
         SwitchSide();
-#endif
+        _sideDev.artsSideHandle += SwitchSide;
+
     }
 
     private void SwitchSide()
     {
-        if (isAni)
-            this.gameObject.SetActive(!this.gameObject.activeInHierarchy);
-        else if (_initialLayer.value != 12)
-            _renderer.enabled = !_renderer.enabled;
+        if (_theSide == SideSwitchMgr.It.curSide)
+            this.gameObject.layer = 12;
         else
-        {
-            this.gameObject.layer = this.gameObject.layer == 8 ? 12 : 8;
-
-        }
-
+            this.gameObject.layer = 8;
     }
 
 

@@ -13,12 +13,18 @@ public class LevelOrigin : MonoBehaviour
     public int gearCount;
     //双cube场景
     public bool doubleCube;
+
+    //是否完成美术图拼接
+    public bool hasArts;
+
     private Vector3 _spawanPoint;
     private int _mapBase;
 
     public void Awake()
     {
         _mapBase = this.transform.parent.parent.GetComponent<CubeState>().mapBase;
+
+        LevelMgr.It.isSideSwitch = hasArts;
     }
 
     void Start()
@@ -44,7 +50,6 @@ public class LevelOrigin : MonoBehaviour
         yield return null;
 
         player.ctrlActive = true;
-
     }
 }
 

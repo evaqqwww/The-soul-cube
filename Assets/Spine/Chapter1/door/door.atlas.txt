@@ -1,0 +1,111 @@
+
+door.png
+size: 1024,512
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+door1
+  rotate: false
+  xy: 236, 308
+  size: 229, 202
+  orig: 229, 202
+  offset: 0, 0
+  index: -1
+door11
+  rotate: false
+  xy: 2, 310
+  size: 232, 200
+  orig: 232, 200
+  offset: 0, 0
+  index: -1
+door2
+  rotate: false
+  xy: 467, 308
+  size: 229, 202
+  orig: 229, 202
+  offset: 0, 0
+  index: -1
+door22
+  rotate: false
+  xy: 2, 108
+  size: 232, 200
+  orig: 232, 200
+  offset: 0, 0
+  index: -1
+eye1
+  rotate: false
+  xy: 236, 116
+  size: 21, 21
+  orig: 21, 21
+  offset: 0, 0
+  index: -1
+eye11
+  rotate: false
+  xy: 342, 287
+  size: 19, 19
+  orig: 19, 19
+  offset: 0, 0
+  index: -1
+eye2
+  rotate: false
+  xy: 698, 320
+  size: 21, 20
+  orig: 21, 20
+  offset: 0, 0
+  index: -1
+eye22
+  rotate: false
+  xy: 798, 491
+  size: 19, 19
+  orig: 19, 19
+  offset: 0, 0
+  index: -1
+menl
+  rotate: true
+  xy: 2, 2
+  size: 50, 168
+  orig: 50, 168
+  offset: 0, 0
+  index: -1
+menll
+  rotate: false
+  xy: 290, 142
+  size: 50, 164
+  orig: 50, 164
+  offset: 0, 0
+  index: -1
+menlll
+  rotate: false
+  xy: 698, 342
+  size: 50, 168
+  orig: 50, 168
+  offset: 0, 0
+  index: -1
+menr
+  rotate: true
+  xy: 2, 54
+  size: 52, 167
+  orig: 52, 167
+  offset: 0, 0
+  index: -1
+menrr
+  rotate: false
+  xy: 750, 349
+  size: 46, 161
+  orig: 46, 161
+  offset: 0, 0
+  index: -1
+menrrr
+  rotate: false
+  xy: 236, 139
+  size: 52, 167
+  orig: 52, 167
+  offset: 0, 0
+  index: -1
+red
+  rotate: false
+  xy: 171, 81
+  size: 27, 25
+  orig: 27, 25
+  offset: 0, 0
+  index: -1

@@ -13,8 +13,9 @@ public class MapSideSwitch : MonoBehaviour
     private SpriteRenderer _backRenderer;
     private SpriteRenderer _forwardRenderer;
     private BoxCollider _boxCollider;
-    private bool _isVoid;
 
+    //是否为虚空状态
+    private bool _isVoid;
 
     public void Awake()
     {
@@ -24,12 +25,13 @@ public class MapSideSwitch : MonoBehaviour
         }
         catch (Exception)
         {
-            
+
         }
         _sideDev = transform.parent.parent.GetComponent<SideDevice>();
 
         if (_back)
             _backRenderer = _back.GetComponent<SpriteRenderer>();
+
         _forwardRenderer = transform.FindChild("map").GetComponent<SpriteRenderer>();
 
         _boxCollider = this.GetComponent<BoxCollider>();
@@ -38,11 +40,11 @@ public class MapSideSwitch : MonoBehaviour
     public void Start()
     {
         //_backRenderer.sprite = Resources.Load<Sprite>("Standard/mapNode");
-        //_backRenderer.color = Color.white;
         if (_backRenderer)
             _backRenderer.sprite.name = "1_back";
 
-#if sideSwitch
+        if (!LevelMgr.It.isSideSwitch)
+            return;
         _forwardRenderer.enabled = false;
         if (_back)
         {
@@ -50,14 +52,12 @@ public class MapSideSwitch : MonoBehaviour
             _sideDev.GetComponent<SideDevice>().mapSideHandle += SwitchSide;
             if (_sideDev.sideNum == 0)
                 return;
-            SwitchSide();
+            SwitchSide(-1);
         }
-#endif
+
     }
 
-#region EditorTest
-
-#if !sideSwitch
+    #region VoidPlat Logic
 
     public void InitVoidPlat(Color _color, bool _void)
     {
@@ -82,12 +82,24 @@ public class MapSideSwitch : MonoBehaviour
         }
     }
 
-#endif
+    #endregion
 
-#endregion
-
-    private void SwitchSide()
+    //重生及换面的显示切换
+    private void SwitchSide(int state)
     {
-        _backRenderer.enabled = !_backRenderer.enabled;
+        switch (state)
+        {
+            case -1:
+                _backRenderer.enabled = !_backRenderer.enabled;
+                break;
+            case 0:
+                _backRenderer.enabled = false;
+                break;
+            case 1:
+                _backRenderer.enabled = true;
+                break;
+            default:
+                break;
+        }
     }
 }

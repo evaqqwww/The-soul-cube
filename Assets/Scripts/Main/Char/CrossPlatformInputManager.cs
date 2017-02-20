@@ -29,6 +29,6 @@ public class CrossPlatformInputManager
     public void Update(int value)
     {
         _inputValue = value;
-        Debug.Log(_inputValue);
+        
     }
 }

@@ -10,14 +10,13 @@ public class VoidPlatform : MonoBehaviour
 
     public int type;
     public bool isVoid;
-    private bool _enable;
 
     private List<MapSideSwitch> _nodes = new List<MapSideSwitch>();
 
 
     public void Awake()
     {
-        
+
         this.GetComponentsInChildren<MapSideSwitch>(_nodes);
     }
 
@@ -29,9 +28,9 @@ public class VoidPlatform : MonoBehaviour
             return;
         for (int i = 0; i < _nodes.Count; i++)
         {
-#if !sideSwitch
+
             _nodes[i].InitVoidPlat(VoidPlatformMgr.It.GetColorByIndex(type), isVoid);
-#endif
+
         }
     }
 
@@ -40,9 +39,9 @@ public class VoidPlatform : MonoBehaviour
     {
         for (int i = 0; i < _nodes.Count; i++)
         {
-#if !sideSwitch
+
             _nodes[i].SwitchState();
-#endif
+
         }
     }
 }

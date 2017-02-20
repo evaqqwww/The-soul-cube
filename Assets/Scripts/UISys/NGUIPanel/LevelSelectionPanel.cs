@@ -22,12 +22,9 @@ public class LevelSelectionPanel : NGUIBasePanel
         base.Init();
 
 
-        UIButtonEventObject _levelBtn_1 = SystemUtil.AddOrGetComponent<UIButtonEventObject>(this._anchorCenterT, "level_1");
-        _levelBtn_1.AddSingleClick(OnLevelStart, 1);
-        UIButtonEventObject _levelBtn_2 = SystemUtil.AddOrGetComponent<UIButtonEventObject>(this._anchorCenterT, "level_2");
-        _levelBtn_2.AddSingleClick(OnLevelStart, 2);
-        UIButtonEventObject _levelBtn_3 = SystemUtil.AddOrGetComponent<UIButtonEventObject>(this._anchorCenterT, "level_3");
-        _levelBtn_3.AddSingleClick(OnLevelStart, 3);
+        UIButtonEventObject _playBtn = SystemUtil.AddOrGetComponent<UIButtonEventObject>(this._anchorCenterT, "start");
+        _playBtn.AddSingleClick(OnLevelStart, 1);
+        
 
         UIButtonEventObject _returnBtn = SystemUtil.AddOrGetComponent<UIButtonEventObject>(this._anchorBottomRightT, "return");
         _returnBtn.AddSingleClick(OnBtnReturn);
@@ -52,10 +49,8 @@ public class LevelSelectionPanel : NGUIBasePanel
         bindEventListener(bBind, EventsDefine.LEVELSELECTION_SHOW, ToShow);
         bindEventListener(bBind, EventsDefine.LEVELSELECTION_HIDE, ToHide);
         bindEventListener(bBind, EventsDefine.LEVELTOLOAD, ToLoadLevel);
-
     }
 
-   
 
     public override void OnShowing()
     {
@@ -72,7 +67,7 @@ public class LevelSelectionPanel : NGUIBasePanel
 
     private void ToLoadLevel(int levelNum)
     {
-        StringBuilder levelName = new StringBuilder("Level_");
+        StringBuilder levelName = new StringBuilder("Level");
         levelName.Append(levelNum.ToString());
         SCApp.It.curlevelName = levelName.ToString();
         SCApp.It.levelNum = levelNum;
@@ -110,7 +105,7 @@ public class LevelSelectionPanel : NGUIBasePanel
     {
         int index = (int)ps[0];
         Hide();
-
+        
         ToLoadLevel(index);
     }
 

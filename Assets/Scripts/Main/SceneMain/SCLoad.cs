@@ -17,7 +17,7 @@ public class SCLoad : MonoBehaviour
 
     private void StartLoad()
     {
-        GlobalEvents.It.events.dispatchEvent(new HEventWithParams(EventsDefine.LOADINGPANEL_SHOW, SCApp.It.curlevelName));
+        GlobalEvents.It.events.dispatchEvent(EventsDefine.LOADINGPANEL_SHOW);
 
     }
 }

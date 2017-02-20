@@ -1,0 +1,41 @@
+
+black.png
+size: 512,256
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+body
+  rotate: false
+  xy: 2, 2
+  size: 133, 227
+  orig: 133, 227
+  offset: 0, 0
+  index: -1
+eye
+  rotate: false
+  xy: 440, 161
+  size: 66, 68
+  orig: 66, 68
+  offset: 0, 0
+  index: -1
+hand1
+  rotate: false
+  xy: 137, 18
+  size: 86, 211
+  orig: 86, 211
+  offset: 0, 0
+  index: -1
+hand2
+  rotate: true
+  xy: 225, 160
+  size: 69, 213
+  orig: 69, 213
+  offset: 0, 0
+  index: -1
+hand3
+  rotate: true
+  xy: 225, 52
+  size: 106, 165
+  orig: 106, 165
+  offset: 0, 0
+  index: -1
